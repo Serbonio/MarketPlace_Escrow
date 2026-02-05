@@ -8,6 +8,7 @@ class UsuarioController {
       res.status(201).json(usuario);
     } catch (error) {
       res.status(400).json({ error: error.message });
+
     }
   }
 

@@ -6,7 +6,7 @@ const PORT = process.env.PORT || 3000;
 
 (async () => {
   try {
-    await sequelize.sync();
+    await sequelize.sync({ alter: true });
 console.log('📦 Models sincronizados');
 
     await sequelize.authenticate();

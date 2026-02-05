@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Meus Produtos | Vendedor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h4 class="logo">🛒 Marketplace</h4>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li class="active">Meus Produtos</li>
+      <li><a href="adicionar-produto.html">Adicionar Produto</a></li>
+      <li><a href="encomendas.html">Encomendas</a></li>
+      <li><a href="perfil.html">Perfil</a></li>
+      <li class="logout">Sair</li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main-content">
+
+    <!-- TOPO -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2>📦 Meus Produtos</h2>
+      <a href="adicionar-produto.html" class="btn btn-primary">
+        ➕ Adicionar Produto
+      </a>
+    </div>
+
+    <!-- FILTRO -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Pesquisar produto">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select">
+              <option>Status</option>
+              <option>Ativo</option>
+              <option>Esgotado</option>
+              <option>Pendente</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select">
+              <option>Categoria</option>
+              <option>Eletrónicos</option>
+              <option>Informática</option>
+              <option>Acessórios</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-secondary w-100">Filtrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTA DE PRODUTOS -->
+    <div class="card">
+      <div class="card-body table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Imagem</th>
+              <th>Produto</th>
+              <th>Preço</th>
+              <th>Stock</th>
+              <th>Status</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>01</td>
+              <td>
+                <img src="../assets/images/produtos/produto1.jpg" class="produto-img">
+              </td>
+              <td>Smartphone Samsung A12</td>
+              <td>120.000 Kz</td>
+              <td>10</td>
+              <td><span class="badge bg-success">Ativo</span></td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-primary">Editar</button>
+                <button class="btn btn-sm btn-outline-danger">Excluir</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>02</td>
+              <td>
+                <img src="../assets/images/produtos/produto2.jpg" class="produto-img">
+              </td>
+              <td>Notebook HP</td>
+              <td>450.000 Kz</td>
+              <td>0</td>
+              <td><span class="badge bg-danger">Esgotado</span></td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-primary">Editar</button>
+                <button class="btn btn-sm btn-outline-danger">Excluir</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

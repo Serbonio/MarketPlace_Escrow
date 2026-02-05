@@ -1,0 +1,288 @@
+body {
+  background-color: #f4f6f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.card {
+  border-radius: 12px;
+}
+
+.btn-primary {
+  border-radius: 8px;
+}
+
+footer {
+  background: #212529;
+  color: #fff;
+  padding: 20px;
+  margin-top: 60px;
+  text-align: center;
+}
+.hero {
+  height: 100vh;
+  background: linear-gradient(
+      rgba(0,0,0,0.6),
+      rgba(0,0,0,0.6)
+    ),
+    url('../images/hero-bg.jpg') center/cover no-repeat;
+}
+
+.icon {
+  font-size: 40px;
+}
+
+.step {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 10px;
+  border-radius: 50%;
+  background: #0d6efd;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.cta {
+  background: #0d6efd;
+}
+
+.footer {
+  background: #212529;
+  color: #fff;
+  padding: 20px 0;
+}
+/* AUTH PAGES */
+.auth-body {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0d6efd, #6610f2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 400px;
+  padding: 20px;
+}
+
+.auth-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+}
+
+.auth-card .form-control {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.auth-card button {
+  border-radius: 8px;
+  padding: 10px;
+}
+/* DASHBOARD LAYOUT */
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: 240px;
+  background: #0d6efd;
+  color: #fff;
+  padding: 20px;
+}
+
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.sidebar .menu {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar .menu li {
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+
+.sidebar .menu li a {
+  color: #fff;
+  text-decoration: none;
+}
+
+.sidebar .menu li.active,
+.sidebar .menu li:hover {
+  background: rgba(255,255,255,0.2);
+}
+
+.sidebar .logout {
+  margin-top: 30px;
+  background: #dc3545;
+  text-align: center;
+}
+
+/* MAIN */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  background: #f8f9fa;
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+}
+
+/* CARDS */
+.dashboard-card {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+/* PRODUTOS */
+.produto-card {
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.2s;
+}
+
+.produto-card:hover {
+  transform: translateY(-5px);
+}
+
+.produto-card img {
+  height: 200px;
+  object-fit: cover;
+}
+/* DETALHE DO PRODUTO */
+.produto-imagem img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+
+.produto-card img {
+  height: 150px;
+  object-fit: cover;
+}
+/* CARRINHO */
+.table img {
+  object-fit: cover;
+  height: 50px;
+  width: 50px;
+}
+/* CHECKOUT */
+.card input[type="text"], .card input[type="number"] {
+  border-radius: 8px;
+  padding: 10px;
+}
+
+.card .btn {
+  border-radius: 8px;
+  padding: 12px;
+}
+/* ENCOMENDAS */
+.badge {
+  font-size: 0.9em;
+  padding: 6px 10px;
+}
+/* PERFIL DO CLIENTE */
+.main-content img {
+  border: 2px solid #0d6efd;
+  padding: 5px;
+}
+
+#perfilForm .form-control {
+  border-radius: 8px;
+}
+/* DASHBOARD VENDEDOR */
+.dashboard-card {
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+}
+/* PRODUTOS DO VENDEDOR */
+.produto-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+/* ADICIONAR PRODUTO */
+form.card h5 {
+  font-weight: 600;
+  color: #333;
+}
+/* ENCOMENDAS DO VENDEDOR */
+.table td, .table th {
+  vertical-align: middle;
+}
+/* PERFIL */
+.alert {
+  border-radius: 10px;
+}
+form.card h5 {
+  font-weight: 600;
+}
+/* ADMIN */
+.sidebar.admin {
+  background-color: #1e1e2f;
+}
+.admin-card {
+  background: linear-gradient(135deg, #4b6cb7, #182848);
+  color: #fff;
+}
+/* UTILIZADORES */
+.badge {
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+/* VENDEDORES */
+.badge {
+  padding: 6px 10px;
+  border-radius: 8px;
+}
+/* PRODUTOS ADMIN */
+.table img {
+  width: 50px;
+  border-radius: 6px;
+}
+.stat-card {
+  padding: 20px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  text-align: center;
+}
+.stat-card {
+  padding: 20px;
+  border-radius: 12px;
+  background: #f8f9fa;
+  text-align: center;
+  font-weight: bold;
+}
+.card p {
+  font-size: 0.9rem;
+}
+.card h5 {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+body {
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .logo {
+    font-family: 'Inter', sans-serif;
+}

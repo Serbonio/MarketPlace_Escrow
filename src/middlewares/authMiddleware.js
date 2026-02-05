@@ -8,7 +8,7 @@ module.exports = (req, res, next) => {
     return res.status(401).json({ error: 'Token não informado' });
   }
 
-  const [, token] = authHeader.split(' ');
+  const [token] = authHeader.split(' ');
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);

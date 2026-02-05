@@ -1,0 +1,1531 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Meus Favoritos | SmartMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --sidebar-bg: #0f172a;
+      --main-bg: #f8fafc;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--main-bg);
+      color: #1e293b;
+      overflow-x: hidden;
+    }
+
+    .dashboard-wrapper {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* SIDEBAR */
+    .sidebar {
+      width: 280px;
+      background: linear-gradient(180deg, var(--sidebar-bg) 0%, #1e293b 100%);
+      color: white;
+      padding: 30px 20px;
+      position: fixed;
+      height: 100vh;
+      z-index: 1000;
+      transition: var(--transition);
+      box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo-area {
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 50px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+      text-decoration: none;
+      transition: var(--transition);
+    }
+
+    .logo-area:hover {
+      transform: translateX(5px);
+    }
+
+    .logo-icon {
+      background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+      padding: 12px;
+      border-radius: 12px;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+    }
+
+    .menu-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu-item {
+      margin-bottom: 8px;
+    }
+
+    .menu-link {
+      color: #94a3b8;
+      text-decoration: none;
+      padding: 14px 18px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 500;
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .menu-link::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 4px;
+      background: var(--accent);
+      transform: translateX(-100%);
+      transition: var(--transition);
+    }
+
+    .menu-link:hover {
+      background: rgba(37, 99, 235, 0.1);
+      color: #60a5fa;
+      transform: translateX(5px);
+    }
+
+    .menu-link:hover::before {
+      transform: translateX(0);
+    }
+
+    .menu-link.active {
+      background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+      color: white;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    .menu-link.active::before {
+      transform: translateX(0);
+      background: white;
+    }
+
+    .menu-link i {
+      font-size: 1.1rem;
+      width: 20px;
+      text-align: center;
+    }
+
+    /* BADGE DE CONTADOR */
+    .menu-badge {
+      background: var(--danger);
+      color: white;
+      padding: 3px 8px;
+      border-radius: 10px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      margin-left: auto;
+    }
+
+    /* CONTEÚDO PRINCIPAL */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 40px;
+      transition: var(--transition);
+    }
+
+    /* HEADER DA PÁGINA */
+    .page-header {
+      background: white;
+      padding: 30px 35px;
+      border-radius: 24px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 35px;
+      animation: slideDown 0.5s ease;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .page-header p {
+      color: #64748b;
+      margin: 0;
+      font-size: 1.05rem;
+    }
+
+    .favorites-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #fee2e2 0%, #fecaca 100%);
+      color: var(--danger);
+      padding: 8px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+
+    /* TOOLBAR */
+    .favorites-toolbar {
+      background: white;
+      padding: 20px 25px;
+      border-radius: 20px;
+      box-shadow: var(--card-shadow);
+      margin-bottom: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .toolbar-left {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-toolbar {
+      padding: 12px 20px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #64748b;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-toolbar:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: #eff6ff;
+    }
+
+    .btn-toolbar.active {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
+    }
+
+    .btn-clear-all {
+      background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-clear-all:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-add-all-cart {
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-weight: 700;
+      transition: var(--transition);
+      cursor: pointer;
+    }
+
+    .btn-add-all-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+    }
+
+    /* FILTROS */
+    .filter-select {
+      padding: 12px 18px;
+      border: 2px solid #e2e8f0;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #64748b;
+      background: white;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .filter-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1);
+    }
+
+    /* CARDS DE FAVORITOS */
+    .favorite-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--card-shadow);
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      animation: fadeInUp 0.6s ease backwards;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .favorite-card:nth-child(1) { animation-delay: 0.1s; }
+    .favorite-card:nth-child(2) { animation-delay: 0.15s; }
+    .favorite-card:nth-child(3) { animation-delay: 0.2s; }
+    .favorite-card:nth-child(4) { animation-delay: 0.25s; }
+    .favorite-card:nth-child(5) { animation-delay: 0.3s; }
+    .favorite-card:nth-child(6) { animation-delay: 0.35s; }
+
+    .favorite-card:hover {
+      transform: translateY(-12px) scale(1.02);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    .card-image-container {
+      position: relative;
+      height: 240px;
+      overflow: hidden;
+      background: #f8fafc;
+    }
+
+    .card-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .favorite-card:hover .card-image-container img {
+      transform: scale(1.15) rotate(2deg);
+    }
+
+    .remove-favorite {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      width: 45px;
+      height: 45px;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: none;
+      border-radius: 50%;
+      color: var(--danger);
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+    }
+
+    .remove-favorite:hover {
+      background: var(--danger);
+      color: white;
+      transform: scale(1.15) rotate(90deg);
+    }
+
+    .discount-badge {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 10px;
+      font-size: 0.85rem;
+      font-weight: 800;
+      box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+    }
+
+    .stock-badge {
+      position: absolute;
+      bottom: 15px;
+      left: 15px;
+      background: rgba(16, 185, 129, 0.95);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      font-weight: 700;
+      backdrop-filter: blur(10px);
+    }
+
+    .stock-badge.out-of-stock {
+      background: rgba(239, 68, 68, 0.95);
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .category-tag {
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .card-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 10px;
+      transition: var(--transition);
+    }
+
+    .favorite-card:hover .card-title {
+      color: var(--accent);
+    }
+
+    .seller-info {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      color: #64748b;
+      margin-bottom: 12px;
+    }
+
+    .verified-badge {
+      color: var(--success);
+      font-weight: 600;
+    }
+
+    .rating-section {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+
+    .stars {
+      display: flex;
+      gap: 3px;
+    }
+
+    .stars i {
+      color: #fbbf24;
+      font-size: 0.95rem;
+    }
+
+    .rating-text {
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 0.9rem;
+    }
+
+    .price-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 15px 0;
+    }
+
+    .current-price {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1e293b;
+    }
+
+    .old-price {
+      font-size: 1rem;
+      color: #94a3b8;
+      text-decoration: line-through;
+    }
+
+    .added-date {
+      font-size: 0.8rem;
+      color: #94a3b8;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .card-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .btn-view-details {
+      flex: 1;
+      background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: white;
+      font-weight: 700;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-view-details:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+      color: white;
+    }
+
+    .btn-add-to-cart {
+      flex: 1;
+      background: linear-gradient(135deg, var(--success) 0%, #059669 100%);
+      border: none;
+      border-radius: 12px;
+      padding: 14px 20px;
+      color: white;
+      font-weight: 700;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+      cursor: pointer;
+    }
+
+    .btn-add-to-cart:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(16, 185, 129, 0.5);
+    }
+
+    /* ESTADO VAZIO */
+    .empty-state {
+      background: white;
+      border-radius: 24px;
+      padding: 80px 40px;
+      text-align: center;
+      box-shadow: var(--card-shadow);
+      display: none;
+    }
+
+    .empty-state.show {
+      display: block;
+    }
+
+    .empty-icon {
+      width: 120px;
+      height: 120px;
+      background: #fee2e2;
+      color: var(--danger);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      margin: 0 auto 25px;
+    }
+
+    .empty-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+
+    .empty-text {
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+
+    .btn-browse-products {
+      background: linear-gradient(135deg, var(--accent) 0%, #3b82f6 100%);
+      color: white;
+      border: none;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-weight: 700;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.4);
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-browse-products:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
+      color: white;
+    }
+
+    /* TOAST */
+    .toast-notification {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      background: white;
+      padding: 20px 25px;
+      border-radius: 16px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      transform: translateX(400px);
+      transition: var(--transition);
+      z-index: 9999;
+      min-width: 320px;
+    }
+
+    .toast-notification.show {
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+    }
+
+    .toast-success .toast-icon {
+      background: #d1fae5;
+      color: var(--success);
+    }
+
+    .toast-error .toast-icon {
+      background: #fee2e2;
+      color: var(--danger);
+    }
+
+    .toast-info .toast-icon {
+      background: #dbeafe;
+      color: var(--accent);
+    }
+
+    /* MODAL DE CONFIRMAÇÃO */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 9998;
+      backdrop-filter: blur(5px);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-overlay.show {
+      display: flex;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .confirm-modal {
+      background: white;
+      border-radius: 24px;
+      width: 90%;
+      max-width: 500px;
+      padding: 40px;
+      position: relative;
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(50px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .modal-icon {
+      width: 80px;
+      height: 80px;
+      background: #fee2e2;
+      color: var(--danger);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.5rem;
+      margin: 0 auto 20px;
+    }
+
+    .modal-title {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #1e293b;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    .modal-text {
+      color: #64748b;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-modal-cancel {
+      flex: 1;
+      padding: 14px;
+      border: 2px solid #e2e8f0;
+      background: white;
+      border-radius: 12px;
+      font-weight: 700;
+      color: #64748b;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-modal-cancel:hover {
+      border-color: #94a3b8;
+      background: #f8fafc;
+    }
+
+    .btn-modal-confirm {
+      flex: 1;
+      padding: 14px;
+      border: none;
+      background: linear-gradient(135deg, var(--danger) 0%, #dc2626 100%);
+      border-radius: 12px;
+      font-weight: 700;
+      color: white;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-modal-confirm:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 992px) {
+      .sidebar {
+        width: 80px;
+        padding: 20px 10px;
+      }
+      .sidebar span, .sidebar h4 {
+        display: none;
+      }
+      .logo-icon {
+        margin: 0 auto;
+      }
+      .main-content {
+        margin-left: 80px;
+        padding: 20px;
+      }
+      .page-header h1 {
+        font-size: 1.7rem;
+      }
+      .favorites-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+      .main-content {
+        margin-left: 0;
+      }
+      .card-actions {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<div class="dashboard-wrapper">
+  
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="marketplace_melhorado.html" class="logo-area">
+      <div class="logo-icon">🛒</div>
+      <h4 class="mb-0">SmartMarket</h4>
+    </a>
+
+    <ul class="menu-list">
+      <li class="menu-item">
+        <a href="dashboard.html" class="menu-link">
+          <i class="fas fa-th-large"></i> <span>Dashboard</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="produtos.html" class="menu-link">
+          <i class="fas fa-shopping-bag"></i> <span>Produtos</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="encomendas.html" class="menu-link">
+          <i class="fas fa-truck"></i> <span>Encomendas</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="favoritos.html" class="menu-link active">
+          <i class="fas fa-heart"></i> <span>Favoritos</span>
+          <span class="menu-badge" id="favoritesCount">8</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="carrinho.html" class="menu-link">
+          <i class="fas fa-shopping-cart"></i> <span>Carrinho</span>
+          <span class="menu-badge">3</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a href="perfil.html" class="menu-link">
+          <i class="fas fa-user-circle"></i> <span>Perfil</span>
+        </a>
+      </li>
+      <li class="menu-item mt-auto" style="margin-top: 80px;">
+        <a href="#" class="menu-link text-danger">
+          <i class="fas fa-sign-out-alt"></i> <span>Sair</span>
+        </a>
+      </li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="main-content">
+
+    <!-- HEADER DA PÁGINA -->
+    <div class="page-header">
+      <h1>
+        <i class="fas fa-heart" style="color: var(--danger);"></i>
+        Meus Favoritos
+      </h1>
+      <div class="d-flex justify-content-between align-items-center flex-wrap gap-3 mt-3">
+        <p class="mb-0">Gerencie os produtos que você salvou para comprar depois</p>
+        <div class="favorites-count">
+          <i class="fas fa-bookmark"></i>
+          <span id="totalFavorites">8 itens salvos</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOOLBAR -->
+    <div class="favorites-toolbar">
+      <div class="toolbar-left">
+        <select class="filter-select" id="categoryFilter">
+          <option value="all">Todas as Categorias</option>
+          <option value="eletronicos">Eletrônicos</option>
+          <option value="informatica">Informática</option>
+          <option value="acessorios">Acessórios</option>
+          <option value="smartphones">Smartphones</option>
+        </select>
+        <select class="filter-select" id="sortFilter">
+          <option value="recent">Adicionados Recentemente</option>
+          <option value="price-asc">Menor Preço</option>
+          <option value="price-desc">Maior Preço</option>
+          <option value="name">Nome A-Z</option>
+        </select>
+      </div>
+      <div class="d-flex gap-2">
+        <button class="btn-add-all-cart" onclick="addAllToCart()">
+          <i class="fas fa-cart-plus me-2"></i>Adicionar Tudo ao Carrinho
+        </button>
+        <button class="btn-clear-all" onclick="confirmClearAll()">
+          <i class="fas fa-trash-alt me-2"></i>Limpar Tudo
+        </button>
+      </div>
+    </div>
+
+    <!-- GRID DE FAVORITOS -->
+    <div class="row g-4" id="favoritesGrid">
+      
+      <!-- Produto 1 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="eletronicos" data-price="850000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="discount-badge">-15%</span>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=1760&auto=format&fit=crop" alt="Samsung Galaxy S23 Ultra">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Eletrônicos</span>
+            <h3 class="card-title">Samsung Galaxy S23 Ultra</h3>
+            <div class="seller-info">
+              <span>TechStore Luanda</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-text">4.8</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 2 dias
+            </div>
+            <div class="price-section">
+              <div class="current-price">850.000 Kz</div>
+              <div class="old-price">1.000.000 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'Samsung Galaxy S23 Ultra')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 2 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="informatica" data-price="1250000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="discount-badge">-20%</span>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=1742&auto=format&fit=crop" alt="MacBook Air M2">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Informática</span>
+            <h3 class="card-title">MacBook Air M2 - 13"</h3>
+            <div class="seller-info">
+              <span>Apple Store Angola</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-text">5.0</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 5 dias
+            </div>
+            <div class="price-section">
+              <div class="current-price">1.250.000 Kz</div>
+              <div class="old-price">1.562.500 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'MacBook Air M2')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 3 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="acessorios" data-price="210000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=1740&auto=format&fit=crop" alt="Sony WH-1000XM5">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Acessórios</span>
+            <h3 class="card-title">Sony WH-1000XM5</h3>
+            <div class="seller-info">
+              <span>AudioPro Angola</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-text">4.7</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 1 semana
+            </div>
+            <div class="price-section">
+              <div class="current-price">210.000 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'Sony WH-1000XM5')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 4 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="smartphones" data-price="1875000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="discount-badge">-25%</span>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?q=80&w=1000&auto=format&fit=crop" alt="iPhone 15 Pro Max">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Smartphones</span>
+            <h3 class="card-title">iPhone 15 Pro Max</h3>
+            <div class="seller-info">
+              <span>iStore Oficial</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-text">5.0</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 3 dias
+            </div>
+            <div class="price-section">
+              <div class="current-price">1.875.000 Kz</div>
+              <div class="old-price">2.500.000 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'iPhone 15 Pro Max')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 5 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="acessorios" data-price="625000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=1000&auto=format&fit=crop" alt="Apple Watch Series 9">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Smartwatch</span>
+            <h3 class="card-title">Apple Watch Series 9</h3>
+            <div class="seller-info">
+              <span>WatchHub Angola</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-text">4.9</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 4 dias
+            </div>
+            <div class="price-section">
+              <div class="current-price">625.000 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'Apple Watch Series 9')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 6 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="eletronicos" data-price="562500">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="discount-badge">-10%</span>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?q=80&w=1000&auto=format&fit=crop" alt="PlayStation 5 Slim">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Gaming</span>
+            <h3 class="card-title">PlayStation 5 Slim</h3>
+            <div class="seller-info">
+              <span>GameStore AO</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-text">5.0</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 6 dias
+            </div>
+            <div class="price-section">
+              <div class="current-price">562.500 Kz</div>
+              <div class="old-price">625.000 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'PlayStation 5 Slim')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 7 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="informatica" data-price="375000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="stock-badge out-of-stock">Sem Stock</span>
+            <img src="https://images.unsplash.com/photo-1587202372616-b43abea06c2a?q=80&w=1000&auto=format&fit=crop" alt="iPad Air">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Tablets</span>
+            <h3 class="card-title">iPad Air M1 64GB</h3>
+            <div class="seller-info">
+              <span>Apple Store Angola</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star-half-alt"></i>
+              </div>
+              <span class="rating-text">4.8</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 1 semana
+            </div>
+            <div class="price-section">
+              <div class="current-price">375.000 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" disabled style="opacity: 0.5; cursor: not-allowed;">
+                <i class="fas fa-ban"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Produto 8 -->
+      <div class="col-sm-6 col-lg-4 col-xl-3" data-category="acessorios" data-price="95000">
+        <div class="favorite-card">
+          <div class="card-image-container">
+            <button class="remove-favorite" onclick="removeFavorite(this)" title="Remover dos Favoritos">
+              <i class="fas fa-heart"></i>
+            </button>
+            <span class="discount-badge">-30%</span>
+            <span class="stock-badge">Em Stock</span>
+            <img src="https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?q=80&w=1000&auto=format&fit=crop" alt="AirPods Pro">
+          </div>
+          <div class="card-body">
+            <span class="category-tag">Áudio</span>
+            <h3 class="card-title">AirPods Pro 2ª Geração</h3>
+            <div class="seller-info">
+              <span>AudioPro Angola</span>
+              <span class="verified-badge">✓</span>
+            </div>
+            <div class="rating-section">
+              <div class="stars">
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+                <i class="fas fa-star"></i>
+              </div>
+              <span class="rating-text">5.0</span>
+            </div>
+            <div class="added-date">
+              <i class="far fa-clock"></i>
+              Adicionado há 2 dias
+            </div>
+            <div class="price-section">
+              <div class="current-price">95.000 Kz</div>
+              <div class="old-price">135.714 Kz</div>
+            </div>
+            <div class="card-actions">
+              <a href="detalhes_produto.html" class="btn-view-details">
+                <i class="fas fa-eye"></i> Detalhes
+              </a>
+              <button class="btn-add-to-cart" onclick="addToCart(this, 'AirPods Pro')">
+                <i class="fas fa-cart-plus"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ESTADO VAZIO -->
+    <div class="empty-state" id="emptyState">
+      <div class="empty-icon">
+        <i class="fas fa-heart-broken"></i>
+      </div>
+      <h2 class="empty-title">Nenhum Favorito Salvo</h2>
+      <p class="empty-text">Você ainda não adicionou nenhum produto aos favoritos.<br>Explore nosso marketplace e salve os produtos que você gosta!</p>
+      <a href="marketplace_melhorado.html" class="btn-browse-products">
+        <i class="fas fa-shopping-bag me-2"></i>Explorar Produtos
+      </a>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL DE CONFIRMAÇÃO -->
+<div class="modal-overlay" id="confirmModal">
+  <div class="confirm-modal">
+    <div class="modal-icon">
+      <i class="fas fa-exclamation-triangle"></i>
+    </div>
+    <h2 class="modal-title">Remover Todos os Favoritos?</h2>
+    <p class="modal-text">Esta ação irá remover todos os produtos da sua lista de favoritos. Esta operação não pode ser desfeita.</p>
+    <div class="modal-actions">
+      <button class="btn-modal-cancel" onclick="closeConfirmModal()">Cancelar</button>
+      <button class="btn-modal-confirm" onclick="clearAllFavorites()">Sim, Remover Tudo</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOAST NOTIFICATION -->
+<div class="toast-notification toast-success" id="toast">
+  <div class="toast-icon">
+    <i class="fas fa-check"></i>
+  </div>
+  <div>
+    <strong id="toastTitle">Sucesso!</strong>
+    <p class="mb-0 small text-muted" id="toastMessage">Operação realizada com sucesso</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+  // Contador de favoritos
+  let favoritesCount = 8;
+
+  // Atualizar contador
+  function updateFavoritesCount() {
+    const items = document.querySelectorAll('.favorite-card').length;
+    favoritesCount = items;
+    document.getElementById('favoritesCount').textContent = items;
+    document.getElementById('totalFavorites').textContent = `${items} ${items === 1 ? 'item salvo' : 'itens salvos'}`;
+
+    // Mostrar estado vazio se não houver favoritos
+    if (items === 0) {
+      document.getElementById('favoritesGrid').style.display = 'none';
+      document.getElementById('emptyState').classList.add('show');
+      document.querySelector('.favorites-toolbar').style.display = 'none';
+    } else {
+      document.getElementById('favoritesGrid').style.display = 'flex';
+      document.getElementById('emptyState').classList.remove('show');
+      document.querySelector('.favorites-toolbar').style.display = 'flex';
+    }
+  }
+
+  // Remover favorito individual
+  function removeFavorite(button) {
+    const card = button.closest('.col-sm-6');
+    const productName = card.querySelector('.card-title').textContent;
+
+    // Animação de saída
+    card.style.animation = 'fadeOut 0.3s ease';
+    
+    setTimeout(() => {
+      card.remove();
+      updateFavoritesCount();
+      showToast('Removido dos Favoritos', `${productName} foi removido da sua lista`, 'error');
+    }, 300);
+  }
+
+  // Confirmar limpar todos
+  function confirmClearAll() {
+    if (favoritesCount > 0) {
+      document.getElementById('confirmModal').classList.add('show');
+    }
+  }
+
+  // Fechar modal de confirmação
+  function closeConfirmModal() {
+    document.getElementById('confirmModal').classList.remove('show');
+  }
+
+  // Limpar todos os favoritos
+  function clearAllFavorites() {
+    const allCards = document.querySelectorAll('.favorite-card').length;
+    document.getElementById('favoritesGrid').innerHTML = '';
+    updateFavoritesCount();
+    closeConfirmModal();
+    showToast('Favoritos Limpos', `${allCards} ${allCards === 1 ? 'produto foi removido' : 'produtos foram removidos'}`, 'info');
+  }
+
+  // Adicionar ao carrinho
+  function addToCart(button, productName) {
+    const icon = button.querySelector('i');
+    const originalClass = icon.className;
+    
+    // Animação de loading
+    icon.className = 'fas fa-spinner fa-spin';
+    button.disabled = true;
+
+    setTimeout(() => {
+      icon.className = 'fas fa-check';
+      
+      setTimeout(() => {
+        icon.className = originalClass;
+        button.disabled = false;
+        showToast('Adicionado ao Carrinho!', `${productName} foi adicionado ao seu carrinho`, 'success');
+      }, 500);
+    }, 800);
+  }
+
+  // Adicionar todos ao carrinho
+  function addAllToCart() {
+    const availableProducts = document.querySelectorAll('.btn-add-to-cart:not([disabled])');
+    
+    if (availableProducts.length === 0) {
+      showToast('Nenhum Produto Disponível', 'Não há produtos disponíveis para adicionar ao carrinho', 'error');
+      return;
+    }
+
+    // Simular adição
+    showToast('Processando...', 'Adicionando produtos ao carrinho', 'info');
+    
+    setTimeout(() => {
+      showToast('Sucesso!', `${availableProducts.length} ${availableProducts.length === 1 ? 'produto foi adicionado' : 'produtos foram adicionados'} ao carrinho`, 'success');
+    }, 1500);
+  }
+
+  // Filtrar por categoria
+  document.getElementById('categoryFilter').addEventListener('change', function() {
+    const selectedCategory = this.value;
+    const allCards = document.querySelectorAll('#favoritesGrid > div');
+
+    allCards.forEach(card => {
+      if (selectedCategory === 'all' || card.dataset.category === selectedCategory) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  });
+
+  // Ordenar produtos
+  document.getElementById('sortFilter').addEventListener('change', function() {
+    const sortType = this.value;
+    const grid = document.getElementById('favoritesGrid');
+    const cards = Array.from(grid.children);
+
+    cards.sort((a, b) => {
+      switch(sortType) {
+        case 'price-asc':
+          return parseInt(a.dataset.price) - parseInt(b.dataset.price);
+        case 'price-desc':
+          return parseInt(b.dataset.price) - parseInt(a.dataset.price);
+        case 'name':
+          const nameA = a.querySelector('.card-title').textContent;
+          const nameB = b.querySelector('.card-title').textContent;
+          return nameA.localeCompare(nameB);
+        default:
+          return 0;
+      }
+    });
+
+    // Re-adicionar cards ordenados
+    cards.forEach(card => grid.appendChild(card));
+  });
+
+  // Mostrar toast
+  function showToast(title, message, type = 'success') {
+    const toast = document.getElementById('toast');
+    toast.className = `toast-notification toast-${type}`;
+    document.getElementById('toastTitle').textContent = title;
+    document.getElementById('toastMessage').textContent = message;
+    
+    const icon = toast.querySelector('.toast-icon i');
+    switch(type) {
+      case 'success':
+        icon.className = 'fas fa-check';
+        break;
+      case 'error':
+        icon.className = 'fas fa-times';
+        break;
+      case 'info':
+        icon.className = 'fas fa-info';
+        break;
+    }
+
+    toast.classList.add('show');
+    
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 3000);
+  }
+
+  // Fechar modal ao clicar fora
+  document.getElementById('confirmModal').addEventListener('click', function(e) {
+    if (e.target === this) {
+      closeConfirmModal();
+    }
+  });
+
+  // Mobile menu toggle
+  const menuToggle = document.createElement('button');
+  menuToggle.className = 'btn btn-primary d-lg-none position-fixed';
+  menuToggle.style.cssText = 'top: 20px; left: 20px; z-index: 1001; border-radius: 12px;';
+  menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+  document.body.appendChild(menuToggle);
+
+  menuToggle.addEventListener('click', () => {
+    document.querySelector('.sidebar').classList.toggle('active');
+  });
+
+  // Animação CSS para fadeOut
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+        transform: scale(1);
+      }
+      to {
+        opacity: 0;
+        transform: scale(0.8);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+
+  // Inicializar
+  updateFavoritesCount();
+</script>
+
+</body>
+</html>

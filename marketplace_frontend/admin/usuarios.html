@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Utilizadores | Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar admin">
+    <h4 class="logo">🛡️ Admin</h4>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li class="active">Utilizadores</li>
+      <li><a href="vendedores.html">Vendedores</a></li>
+      <li><a href="produtos.html">Produtos</a></li>
+      <li><a href="encomendas.html">Encomendas</a></li>
+      <li><a href="pagamentos.html">Pagamentos</a></li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+      <li><a href="configuracoes.html">Configurações</a></li>
+      <li class="logout">Sair</li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main-content">
+
+    <h2 class="mb-4">👥 Gestão de Utilizadores</h2>
+
+    <!-- FILTROS -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Pesquisar nome ou email">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select">
+              <option>Tipo de Utilizador</option>
+              <option>Cliente</option>
+              <option>Vendedor</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <select class="form-select">
+              <option>Estado</option>
+              <option>Ativo</option>
+              <option>Bloqueado</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-secondary w-100">Filtrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="card">
+      <div class="card-body table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Nome</th>
+              <th>Email</th>
+              <th>Tipo</th>
+              <th>Estado</th>
+              <th>Data de Registo</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>01</td>
+              <td>João Silva</td>
+              <td>joao@email.com</td>
+              <td><span class="badge bg-primary">Cliente</span></td>
+              <td><span class="badge bg-success">Ativo</span></td>
+              <td>12/01/2026</td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-danger">Bloquear</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>02</td>
+              <td>Maria Fernandes</td>
+              <td>maria@email.com</td>
+              <td><span class="badge bg-warning text-dark">Vendedor</span></td>
+              <td><span class="badge bg-danger">Bloqueado</span></td>
+              <td>05/01/2026</td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-success">Desbloquear</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

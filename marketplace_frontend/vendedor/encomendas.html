@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Encomendas | Vendedor</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h4 class="logo">🛒 Marketplace</h4>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="produtos.html">Meus Produtos</a></li>
+      <li><a href="adicionar-produto.html">Adicionar Produto</a></li>
+      <li class="active">Encomendas</li>
+      <li><a href="perfil.html">Perfil</a></li>
+      <li class="logout">Sair</li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main-content">
+
+    <h2 class="mb-4">📑 Encomendas Recebidas</h2>
+
+    <!-- FILTROS -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-3">
+            <select class="form-select">
+              <option>Estado</option>
+              <option>Nova</option>
+              <option>Em Processamento</option>
+              <option>Em Entrega</option>
+              <option>Concluída</option>
+              <option>Cancelada</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="Nome do cliente">
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-secondary w-100">Filtrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="card">
+      <div class="card-body table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Produto</th>
+              <th>Cliente</th>
+              <th>Quantidade</th>
+              <th>Total</th>
+              <th>Pagamento</th>
+              <th>Estado</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>1001</td>
+              <td>Smartphone Samsung A12</td>
+              <td>João Silva</td>
+              <td>1</td>
+              <td>120.000 Kz</td>
+              <td>
+                <span class="badge bg-warning">Em Custódia</span>
+              </td>
+              <td>
+                <span class="badge bg-info">Em Entrega</span>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-primary">
+                  Marcar como Enviado
+                </button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>1002</td>
+              <td>Notebook HP</td>
+              <td>Maria Fernandes</td>
+              <td>1</td>
+              <td>450.000 Kz</td>
+              <td>
+                <span class="badge bg-success">Liberado</span>
+              </td>
+              <td>
+                <span class="badge bg-success">Concluída</span>
+              </td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-secondary" disabled>
+                  Finalizada
+                </button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

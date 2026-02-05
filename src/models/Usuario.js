@@ -15,6 +15,10 @@ const Usuario = sequelize.define('Usuario', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  telefone: {
+    type: DataTypes.STRING(20),
+    allowNull: true,
+  }, 
   tipo: {
     type: DataTypes.ENUM('cliente', 'vendedor', 'admin'),
     defaultValue: 'cliente',

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard do Vendedor | Marketplace</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h4 class="logo">🛒 Marketplace</h4>
+    <ul class="menu">
+      <li class="active">Dashboard</li>
+      <li><a href="produtos.html">Meus Produtos</a></li>
+      <li><a href="adicionar-produto.html">Adicionar Produto</a></li>
+      <li><a href="encomendas.html">Encomendas Recebidas</a></li>
+      <li><a href="perfil.html">Meu Perfil</a></li>
+      <li class="logout">Sair</li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main-content">
+
+    <!-- TOPO -->
+    <div class="dashboard-header mb-4">
+      <h2>Olá, Vendedor 👋</h2>
+      <p class="text-muted">Bem-vindo ao seu painel</p>
+    </div>
+
+    <!-- CARDS DE RESUMO -->
+    <div class="row g-3 mb-4">
+
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <h5>Total de Produtos</h5>
+          <h3>25</h3>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <h5>Encomendas em Andamento</h5>
+          <h3>7</h3>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card dashboard-card">
+          <h5>Vendas Concluídas</h5>
+          <h3>15</h3>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ÚLTIMAS ENCOMENDAS -->
+    <div class="card">
+      <div class="card-header fw-bold">
+        Últimas Encomendas Recebidas
+      </div>
+      <div class="card-body">
+        <table class="table table-striped align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Produto</th>
+              <th>Cliente</th>
+              <th>Data</th>
+              <th>Quantidade</th>
+              <th>Estado</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>001</td>
+              <td>Smartphone Samsung</td>
+              <td>João da Silva</td>
+              <td>10/01/2026</td>
+              <td>1</td>
+              <td><span class="badge bg-warning">Em Entrega</span></td>
+            </tr>
+            <tr>
+              <td>002</td>
+              <td>Notebook HP</td>
+              <td>Maria Fernandes</td>
+              <td>05/01/2026</td>
+              <td>1</td>
+              <td><span class="badge bg-success">Concluído</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

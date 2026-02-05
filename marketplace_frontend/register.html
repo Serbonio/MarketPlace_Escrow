@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Registo Corporativo | Marketplace Inteligente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #2563eb;
+      --glass-bg: rgba(15, 23, 42, 0.9);
+    }
+
+    body, html {
+      height: 100%;
+      margin: 0;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Fundo de Negócios (Mesmo do Login para Consistência) */
+    .bg-business {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.75)), 
+                  url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+      z-index: -1;
+    }
+
+    .register-wrapper {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .auth-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 28px;
+      padding: 40px;
+      width: 100%;
+      max-width: 680px; /* Mais largo para o layout de duas colunas */
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      color: white;
+    }
+
+    .brand-title {
+      font-weight: 800;
+      letter-spacing: -1.5px;
+      background: linear-gradient(to right, #ffffff, #60a5fa);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Botão Google Premium */
+    .btn-google {
+      background: white;
+      color: #1f2937;
+      border: none;
+      border-radius: 12px;
+      padding: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      transition: all 0.3s ease;
+      width: 100%;
+      margin-bottom: 25px;
+    }
+    .btn-google:hover {
+      background: #f3f4f6;
+      transform: translateY(-2px);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      margin: 25px 0;
+      color: rgba(255, 255, 255, 0.3);
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+    .divider::before, .divider::after {
+      content: ''; flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .divider:not(:empty)::before { margin-right: 15px; }
+    .divider:not(:empty)::after { margin-left: 15px; }
+
+    /* Estilo dos Inputs */
+    .form-label {
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-group {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    .input-group:focus-within {
+      border-color: var(--primary-color);
+      background: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+    }
+    .input-group-text {
+      background: transparent;
+      border: none;
+      color: rgba(255, 255, 255, 0.4);
+      padding-left: 15px;
+    }
+    .form-control, .form-select {
+      background: transparent !important;
+      border: none;
+      color: white !important;
+      padding: 12px;
+    }
+    .form-control::placeholder { color: rgba(255, 255, 255, 0.3); }
+    .form-control:focus, .form-select:focus { box-shadow: none; }
+
+    /* Opções do Select no modo escuro */
+    .form-select option { background: #1e293b; color: white; }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      border: none;
+      border-radius: 12px;
+      padding: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      transition: 0.4s;
+      margin-top: 15px;
+    }
+    .btn-submit:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(37, 99, 235, 0.4);
+    }
+
+    .back-home {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      opacity: 0.7;
+      z-index: 10;
+    }
+    .back-home:hover { opacity: 1; color: #60a5fa; }
+  </style>
+</head>
+<body>
+
+<div class="bg-business"></div>
+
+<a href="index.html" class="back-home">
+  <i class="fas fa-arrow-left me-2"></i> Voltar ao Portal
+</a>
+
+<div class="register-wrapper">
+  <div class="auth-card">
+    <div class="text-center mb-4">
+      <h2 class="brand-title">Criar Conta de Negócios</h2>
+      <p class="text-white-50 small">Registe-se em menos de 2 minutos para começar a negociar.</p>
+    </div>
+
+    <button type="button" class="btn-google">
+      <img src="https://www.svgrepo.com/show/475656/google-color.svg" width="20" alt="Google">
+      Registar com a Conta Google
+    </button>
+
+    <div class="divider">Ou preencha os detalhes</div>
+
+    <form id="registerForm">
+      <div class="row">
+        <div class="col-12 mb-3">
+          <label class="form-label">Nome Completo / Nome da Empresa</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="far fa-user"></i></span>
+            <input type="text" class="form-control" placeholder="Manuel dos Santos ou Empresa LDA" required>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Email Profissional</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="far fa-envelope"></i></span>
+            <input type="email" class="form-control" placeholder="seu@email.com" required>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Telefone (Angola)</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-phone-alt"></i></span>
+            <input type="tel" class="form-control" placeholder="9xx xxx xxx" required>
+          </div>
+        </div>
+
+        <div class="col-12 mb-3">
+          <label class="form-label">Objetivo na Plataforma</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="far fa-handshake"></i></span>
+            <select class="form-select" style="background-color: transparent;" required>
+              <option value="" selected disabled>Escolha o seu perfil...</option>
+              <option value="cliente">Comprar produtos com segurança</option>
+              <option value="vendedor">Vender e escalar o meu negócio</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Palavra-passe</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="far fa-lock"></i></span>
+            <input type="password" class="form-control" placeholder="••••••••" required>
+          </div>
+        </div>
+
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Confirmar Senha</label>
+          <div class="input-group">
+            <span class="input-group-text"><i class="fas fa-shield-alt"></i></span>
+            <input type="password" class="form-control" placeholder="••••••••" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-check mt-3 mb-4">
+        <input class="form-check-input" type="checkbox" id="terms" required>
+        <label class="form-check-label small text-white-50" for="terms">
+          Aceito os <a href="#" class="text-primary fw-bold text-decoration-none">Termos de Serviço</a> e as normas de segurança do marketplace.
+        </label>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-submit w-100">
+        CRIAR CONTA AGORA <i class="fas fa-rocket ms-2"></i>
+      </button>
+    </form>
+
+    <div class="text-center mt-4 pt-3 border-top border-secondary">
+      <p class="mb-0 text-white-50 small">
+        Já possui uma conta ativa? 
+        <a href="login.html" class="fw-bold text-white text-decoration-none border-bottom">Fazer Login</a>
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn-submit');
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> A CRIAR CONTA...';
+    
+    setTimeout(() => {
+      alert('Conta criada com sucesso! Verifique o seu email para ativação.');
+      location.href = 'login.html';
+    }, 2000);
+  });
+</script>
+
+</body>
+</html>

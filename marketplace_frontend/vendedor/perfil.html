@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Perfil do Vendedor | Marketplace</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h4 class="logo">🛒 Marketplace</h4>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="produtos.html">Meus Produtos</a></li>
+      <li><a href="adicionar-produto.html">Adicionar Produto</a></li>
+      <li><a href="encomendas.html">Encomendas</a></li>
+      <li class="active">Perfil</li>
+      <li class="logout">Sair</li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main-content">
+
+    <h2 class="mb-4">👤 Perfil do Vendedor</h2>
+
+    <!-- ESTADO DA CONTA -->
+    <div class="alert alert-success">
+      ✔ Conta verificada e ativa
+    </div>
+
+    <!-- DADOS PESSOAIS -->
+    <form class="card p-4 mb-4">
+      <h5 class="mb-3">📄 Dados Pessoais</h5>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome Completo</label>
+          <input type="text" class="form-control" value="Carlos Manuel">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Email</label>
+          <input type="email" class="form-control" value="carlos@email.com">
+        </div>
+      </div>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Telefone</label>
+          <input type="text" class="form-control" value="+244 9XX XXX XXX">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Endereço</label>
+          <input type="text" class="form-control" placeholder="Luanda, Angola">
+        </div>
+      </div>
+
+      <button class="btn btn-primary">Salvar Alterações</button>
+    </form>
+
+    <!-- DADOS DA LOJA -->
+    <form class="card p-4 mb-4">
+      <h5 class="mb-3">🏪 Dados da Loja</h5>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Nome da Loja</label>
+          <input type="text" class="form-control" value="Tech Angola">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">Categoria Principal</label>
+          <select class="form-select">
+            <option>Eletrónicos</option>
+            <option>Informática</option>
+            <option>Acessórios</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Descrição da Loja</label>
+        <textarea class="form-control" rows="3">
+Venda de eletrónicos e informática
+        </textarea>
+      </div>
+
+      <button class="btn btn-primary">Atualizar Loja</button>
+    </form>
+
+    <!-- DADOS DE PAGAMENTO -->
+    <form class="card p-4 mb-4">
+      <h5 class="mb-3">💳 Dados Bancários</h5>
+
+      <div class="row mb-3">
+        <div class="col-md-6">
+          <label class="form-label">Banco</label>
+          <input type="text" class="form-control" placeholder="BAI">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label">IBAN / Conta</label>
+          <input type="text" class="form-control" placeholder="AO06....">
+        </div>
+      </div>
+
+      <button class="btn btn-primary">Salvar Dados Bancários</button>
+    </form>
+
+    <!-- ALTERAR SENHA -->
+    <form class="card p-4">
+      <h5 class="mb-3">🔒 Alterar Palavra-passe</h5>
+
+      <div class="row mb-3">
+        <div class="col-md-4">
+          <input type="password" class="form-control" placeholder="Senha atual">
+        </div>
+        <div class="col-md-4">
+          <input type="password" class="form-control" placeholder="Nova senha">
+        </div>
+        <div class="col-md-4">
+          <input type="password" class="form-control" placeholder="Confirmar nova senha">
+        </div>
+      </div>
+
+      <button class="btn btn-warning">Alterar Senha</button>
+    </form>
+
+  </main>
+</div>
+
+</body>
+</html>

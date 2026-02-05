@@ -12,7 +12,7 @@ class UsuarioService {
     const senhaHash = await bcrypt.hash(data.senha, 10);
 
     return usuarioRepository.create({
-      ...data,
+      data,
       senha: senhaHash,
     });
   }
@@ -20,20 +20,16 @@ class UsuarioService {
   async validarLogin(email, senha) {
     const usuario = await usuarioRepository.findByEmail(email);
     if (!usuario) {
-      throw new Error('Email ou senha inválidos');
+      throw new Error('Email não encontrado');
     }
 
     const senhaValida = await bcrypt.compare(senha, usuario.senha);
     if (!senhaValida) {
-      throw new Error('Email ou senha inválidos');
+      throw new Error('Senha incorreta');
     }
 
     return usuario;
   }
-
-  // resto do service continua igual
-
-
 
 
   listarUsuarios() {

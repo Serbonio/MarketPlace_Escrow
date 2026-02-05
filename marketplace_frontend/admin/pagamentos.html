@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Pagamentos | Admin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar admin">
+    <h4 class="logo">🛡️ Admin</h4>
+    <ul class="menu">
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="usuarios.html">Utilizadores</a></li>
+      <li><a href="vendedores.html">Vendedores</a></li>
+      <li><a href="produtos.html">Produtos</a></li>
+      <li><a href="encomendas.html">Encomendas</a></li>
+      <li class="active">Pagamentos</li>
+      <li><a href="relatorios.html">Relatórios</a></li>
+      <li><a href="configuracoes.html">Configurações</a></li>
+      <li class="logout">Sair</li>
+    </ul>
+  </aside>
+
+  <!-- CONTEÚDO -->
+  <main class="main-content">
+
+    <h2 class="mb-4">💳 Gestão de Pagamentos</h2>
+
+    <!-- RESUMO -->
+    <div class="row g-3 mb-4">
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <h6>Total Recebido</h6>
+          <h4>15.450.000 Kz</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <h6>Em Escrow</h6>
+          <h4 class="text-warning">3.200.000 Kz</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <h6>Liberado</h6>
+          <h4 class="text-success">11.800.000 Kz</h4>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card stat-card">
+          <h6>Comissões</h6>
+          <h4 class="text-primary">450.000 Kz</h4>
+        </div>
+      </div>
+    </div>
+
+    <!-- FILTROS -->
+    <div class="card mb-3">
+      <div class="card-body">
+        <div class="row g-2">
+          <div class="col-md-3">
+            <input type="text" class="form-control" placeholder="ID da encomenda">
+          </div>
+          <div class="col-md-3">
+            <select class="form-select">
+              <option>Status do Pagamento</option>
+              <option>Pendente</option>
+              <option>Em Escrow</option>
+              <option>Liberado</option>
+              <option>Cancelado</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <input type="date" class="form-control">
+          </div>
+          <div class="col-md-3">
+            <button class="btn btn-secondary w-100">Filtrar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TABELA -->
+    <div class="card">
+      <div class="card-body table-responsive">
+        <table class="table table-hover align-middle">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Cliente</th>
+              <th>Vendedor</th>
+              <th>Total</th>
+              <th>Comissão</th>
+              <th>Status</th>
+              <th>Data</th>
+              <th class="text-center">Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr>
+              <td>8001</td>
+              <td>João Manuel</td>
+              <td>Tech Angola</td>
+              <td>120.000 Kz</td>
+              <td>6.000 Kz</td>
+              <td><span class="badge bg-warning text-dark">Em Escrow</span></td>
+              <td>02/02/2026</td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-success">Liberar</button>
+                <button class="btn btn-sm btn-outline-primary">Detalhes</button>
+              </td>
+            </tr>
+
+            <tr>
+              <td>8002</td>
+              <td>Ana Paulo</td>
+              <td>ElectroMax</td>
+              <td>450.000 Kz</td>
+              <td>22.500 Kz</td>
+              <td><span class="badge bg-success">Liberado</span></td>
+              <td>01/02/2026</td>
+              <td class="text-center">
+                <button class="btn btn-sm btn-outline-secondary">Ver</button>
+              </td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+</body>
+</html>

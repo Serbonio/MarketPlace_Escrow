@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Meu Perfil | SmartMarket</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap + Fonts + Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --sidebar-bg:#0f172a;
+      --main-bg:#f8fafc;
+      --accent:#2563eb;
+      --accent-hover:#1d4ed8;
+      --success:#10b981;
+      --danger:#ef4444;
+      --card-shadow:0 10px 25px -5px rgba(0,0,0,.1);
+      --transition:all .3s cubic-bezier(.4,0,.2,1);
+    }
+
+    body{
+      font-family:'Plus Jakarta Sans',sans-serif;
+      background:var(--main-bg);
+      color:#1e293b;
+    }
+
+    .dashboard-wrapper{display:flex;min-height:100vh}
+
+    /* SIDEBAR */
+    .sidebar{
+      width:280px;
+      background:linear-gradient(180deg,var(--sidebar-bg),#1e293b);
+      color:#fff;
+      padding:30px 20px;
+      position:fixed;
+      height:100vh;
+      transition:var(--transition);
+      z-index:1000;
+    }
+
+    .logo-area{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      font-weight:800;
+      font-size:1.4rem;
+      margin-bottom:50px;
+      color:#fff;
+      text-decoration:none;
+    }
+
+    .logo-icon{
+      background:linear-gradient(135deg,var(--accent),#3b82f6);
+      padding:12px;
+      border-radius:12px;
+      box-shadow:0 4px 12px rgba(37,99,235,.4);
+    }
+
+    .menu-list{list-style:none;padding:0}
+    .menu-link{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      padding:14px 18px;
+      border-radius:12px;
+      color:#94a3b8;
+      text-decoration:none;
+      font-weight:500;
+      transition:var(--transition);
+    }
+
+    .menu-link:hover{
+      background:rgba(37,99,235,.1);
+      color:#60a5fa;
+      transform:translateX(5px);
+    }
+
+    .menu-link.active{
+      background:linear-gradient(135deg,var(--accent),#3b82f6);
+      color:#fff;
+      box-shadow:0 4px 12px rgba(37,99,235,.4);
+    }
+
+    /* MAIN */
+    .main-content{
+      flex:1;
+      margin-left:280px;
+      padding:40px;
+    }
+
+    .page-header{
+      background:#fff;
+      padding:30px;
+      border-radius:24px;
+      box-shadow:var(--card-shadow);
+      margin-bottom:30px;
+    }
+
+    .profile-grid{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:30px;
+    }
+
+    .card{
+      border:none;
+      border-radius:24px;
+      box-shadow:var(--card-shadow);
+    }
+
+    /* PROFILE PHOTO */
+    .profile-photo{
+      text-align:center;
+      padding:30px;
+    }
+
+    .avatar{
+      width:140px;
+      height:140px;
+      border-radius:50%;
+      object-fit:cover;
+      border:4px solid #e5e7eb;
+      margin-bottom:20px;
+    }
+
+    .btn-upload{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      padding:10px 20px;
+      border-radius:12px;
+      font-weight:700;
+    }
+
+    .btn-upload:hover{background:var(--accent-hover)}
+
+    /* FORM */
+    .form-label{font-weight:700}
+    .form-control{
+      border-radius:12px;
+      padding:12px;
+    }
+
+    .btn-save{
+      background:linear-gradient(135deg,var(--success),#059669);
+      color:#fff;
+      border:none;
+      padding:14px 28px;
+      border-radius:14px;
+      font-weight:800;
+    }
+
+    .btn-save:hover{opacity:.9}
+
+    /* SECURITY */
+    .security-box{
+      background:#f8fafc;
+      border-radius:16px;
+      padding:20px;
+    }
+
+    /* MOBILE */
+    @media(max-width:992px){
+      .sidebar{width:80px;padding:20px 10px}
+      .sidebar span,h4{display:none}
+      .main-content{margin-left:80px;padding:20px}
+      .profile-grid{grid-template-columns:1fr}
+    }
+
+    @media(max-width:768px){
+      .sidebar{transform:translateX(-100%)}
+      .main-content{margin-left:0}
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <a href="marketplace_melhorado.html" class="logo-area">
+      <div class="logo-icon">🛒</div>
+      <span>SmartMarket</span>
+    </a>
+
+    <ul class="menu-list">
+      <li><a class="menu-link" href="dashboard.html"><i class="fas fa-th-large"></i><span>Dashboard</span></a>
+      </li>
+      <li><a class="menu-link" href="produtos.html"><i class="fas fa-store"></i><span>Produtos</span></a>
+      </li>
+      <li><a class="menu-link" href="encomendas.html"><i class="fas fa-truck"></i><span>Encomendas</span></a>
+      </li>
+      <li><a class="menu-link" href="favoritos.html"><i class="fas fa-heart"></i><span>Favoritos</span></a>
+      </li>
+      <li><a class="menu-link" href="carrinho.html"><i class="fas fa-shopping-cart"></i><span>Carrinho</span></a></li>
+      <li><a class="menu-link active" href="perfil.html"><i class="fas fa-user"></i><span>Meu Perfil</span></a>
+      </li>
+      <li class="mt-5"><a class="menu-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i><span>Sair</span></a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+
+    <div class="page-header">
+      <h2><i class="fas fa-user-circle text-primary"></i> Meu Perfil</h2>
+      <p class="text-muted mb-0">Gerencie suas informações pessoais e segurança</p>
+    </div>
+
+    <div class="profile-grid">
+
+      <!-- FOTO -->
+      <div class="card profile-photo">
+        <img src="https://i.pravatar.cc/300" class="avatar" id="avatar">
+        <input type="file" id="photoInput" hidden>
+        <button class="btn-upload" onclick="document.getElementById('photoInput').click()">
+          <i class="fas fa-camera"></i> Alterar Foto
+        </button>
+      </div>
+
+      <!-- FORM -->
+      <div class="card p-4">
+        <form>
+
+          <h5 class="mb-4"><i class="fas fa-id-card"></i> Informações Pessoais</h5>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Nome Completo</label>
+              <input class="form-control" value="João da Silva">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Telefone</label>
+              <input class="form-control" value="+244 9XX XXX XXX">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" value="joao@email.com">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label">Endereço</label>
+              <input class="form-control" value="Luanda, Angola">
+            </div>
+          </div>
+
+          <hr class="my-4">
+
+          <h5 class="mb-3"><i class="fas fa-lock"></i> Segurança</h5>
+
+          <div class="security-box">
+            <div class="mb-3">
+              <label class="form-label">Nova Senha</label>
+              <input type="password" class="form-control" placeholder="••••••••">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirmar Senha</label>
+              <input type="password" class="form-control">
+            </div>
+          </div>
+
+          <button class="btn-save mt-4">
+            <i class="fas fa-save"></i> Salvar Alterações
+          </button>
+
+        </form>
+      </div>
+
+    </div>
+
+  </main>
+</div>
+
+<script>
+  document.getElementById('photoInput').addEventListener('change', e=>{
+    const file = e.target.files[0]
+    if(file){
+      document.getElementById('avatar').src = URL.createObjectURL(file)
+    }
+  })
+</script>
+
+</body>
+</html>
