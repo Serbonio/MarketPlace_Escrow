@@ -12,7 +12,7 @@ class UsuarioService {
     const senhaHash = await bcrypt.hash(data.senha, 10);
 
     return usuarioRepository.create({
-      data,
+      ...data,
       senha: senhaHash,
     });
   }
