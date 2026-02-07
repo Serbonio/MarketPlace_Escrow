@@ -6,9 +6,8 @@ const PORT = process.env.PORT || 3000;
 
 (async () => {
   try {
-    await sequelize.sync({ alter: true });
-console.log('📦 Models sincronizados');
-
+//     await sequelize.sync({ alter: false });
+// console.log('📦 Models sincronizados');
     await sequelize.authenticate();
     console.log('✅ Banco de dados conectado');
 
