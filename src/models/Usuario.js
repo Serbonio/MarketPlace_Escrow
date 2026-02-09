@@ -24,8 +24,14 @@ const Usuario = sequelize.define('Usuario', {
     defaultValue: 'cliente',
   },
 }, {
-  tableName: 'usuarios',
-  timestamps: false,
+  tableName: 'usuario',
+  timestamps: true,
+  underscored: true,
 });
+
+Usuario.associate = (models) => {
+  Usuario.hasMany(models.Produto, { foreignKey: 'vendedor_id', as: 'produtos' });
+  Usuario.hasMany(models.Pedido, { foreignKey: 'cliente_id', as: 'pedidos' });
+};
 
 module.exports = Usuario;

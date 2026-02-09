@@ -21,5 +21,3 @@ module.exports = {
   },
   down: async (queryInterface) => queryInterface.dropTable('loja')
 };
-20260207131103
-20260207131830
