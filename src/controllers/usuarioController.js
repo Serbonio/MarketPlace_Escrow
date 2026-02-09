@@ -1,4 +1,5 @@
 const usuarioService = require('../services/usuarioService');
+const authService = require('../services/authService');
 
 class UsuarioController {
 
