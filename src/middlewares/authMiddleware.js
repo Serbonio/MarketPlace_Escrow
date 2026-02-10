@@ -26,8 +26,12 @@ module.exports = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    console.log('--- DECODED TOKEN ---');
+    console.log(decoded);
+    console.log('---------------------');
     // Boa prática: usar req.userId em vez de req.user para evitar conflitos
     req.userId = decoded.id; 
+    req.tipo = decoded.tipo;
     next();
   } catch {
     return res.status(401).json({ error: 'Token inválido' });

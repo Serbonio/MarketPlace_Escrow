@@ -1,14 +1,19 @@
 const express = require('express');
 const router = express.Router();
 // const authService = require('../services/authService');
-const usuarioController = require('../controllers/usuarioController');
+const routesUsuarios = require('./usuarios');
+const routesLojas = require('./lojas');
+const routesProdutos = require('./produtoRoutes');
+// const usuarioController = require('../controllers/usuarioController');
 
 
-// Middleware de autenticação para rotas protegidas
-router.use(authMiddleware);
+// Rotas usuarios
+router.use('/usuarios', routesUsuarios);
 
-// Rotas protegidas
-router.use('/usuarios', usuarioController);
+// Rotas lojas
+router.use('/lojas', routesLojas);
 
+// Rotas produtos
+router.use('/produtos', routesProdutos);
 
 module.exports = router;

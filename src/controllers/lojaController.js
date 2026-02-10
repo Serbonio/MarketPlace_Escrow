@@ -1,10 +1,11 @@
 const lojaService = require('../services/lojaService');
 
 class LojaController {
-
   async create(req, res) {
     try {
-      const loja = await lojaService.criarLoja(req.user.id, req.body);
+      // Assumindo que você quer salvar qual usuário criou a loja
+      // const dadosComUsuario = { ...req.body, usuario_id: req.userId };
+      const loja = await lojaService.criarLoja(req.userId, req.body);
       res.status(201).json(loja);
     } catch (error) {
       res.status(400).json({ error: error.message });
@@ -12,8 +13,14 @@ class LojaController {
   }
 
   async index(req, res) {
-    const lojas = await lojaService.listarLojas();
-    res.json(lojas);
+    try {
+      // Recebe o status via query string (?status=ativa)
+      const { status } = req.query;
+      const lojas = await lojaService.listarLojas(status);
+      res.json(lojas);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
 
   async show(req, res) {
@@ -27,23 +34,20 @@ class LojaController {
 
   async update(req, res) {
     try {
-      const loja = await lojaService.atualizarLoja(
-        req.params.id,
-        req.user,
-        req.body
-      );
+      const usuario = { id: req.userId, tipo: req.userTipo };
+      const loja = await lojaService.atualizarLoja(req.params.id, usuario, req.body);
       res.json(loja);
     } catch (error) {
-      res.status(403).json({ error: error.message });
+      res.status(400).json({ error: error.message });
     }
   }
 
   async delete(req, res) {
     try {
-      await lojaService.removerLoja(req.params.id, req.user);
+      await lojaService.removerLoja(req.params.id);
       res.status(204).send();
     } catch (error) {
-      res.status(403).json({ error: error.message });
+      res.status(404).json({ error: error.message });
     }
   }
 }

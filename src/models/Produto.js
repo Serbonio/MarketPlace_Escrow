@@ -5,7 +5,10 @@ const sequelize = require('../config/database');
 const Produto = sequelize.define('Produto', {
     loja_id: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: false,
+      refereces:{
+        model: 'loja', 
+        key: 'id'}
     },
     nome: {
       type: DataTypes.STRING,

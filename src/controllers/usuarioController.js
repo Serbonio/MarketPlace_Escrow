@@ -35,6 +35,8 @@ class UsuarioController {
     }
 
   async index(req, res) {
+    console.log('Tipo do usuário:', req.tipo); // Verificar o tipo do usuário
+    console.log('ID do usuário:', req.userId); // Verificar o ID do usuário
     const usuarios = await usuarioService.listarUsuarios();
     res.json(usuarios);
   }

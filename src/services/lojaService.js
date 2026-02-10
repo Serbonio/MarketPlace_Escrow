@@ -3,7 +3,16 @@ const lojaRepository = require('../repositories/lojaRepository');
 class LojaService {
 
   async criarLoja(usuario_id, data) {
-    const lojaExiste = await lojaRepository.findByUsuario(usuario_id);
+    console.log('Criando loja para usuário_id:', usuario_id);
+    console.log('Dados da loja:', data);
+
+    console.log('--- DEBUG SERVICE ---');
+  console.log('Usuario ID recebido:', usuario_id);
+  console.log('Tipo de dado do ID:', typeof usuario_id);
+  console.log('Dados da loja:', data);
+  console.log('---------------------');
+  
+    const lojaExiste = await lojaRepository.findByUsuarioId(usuario_id);
     if (lojaExiste) {
       throw new Error('Usuário já possui uma loja');
     }
@@ -14,8 +23,12 @@ class LojaService {
     });
   }
 
-  listarLojas() {
-    return lojaRepository.findAll();
+  listarLojas(status) {
+    const filters = {};
+    if (status) {
+      filters.status = status; // Ex: 'ativa', 'suspensa'
+    }
+    return lojaRepository.findAll(filters);
   }
 
   async buscarLoja(id) {

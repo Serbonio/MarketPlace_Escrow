@@ -2,6 +2,14 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Loja = sequelize.define('Loja', {
+    usuario_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'usuario', // Nome da tabela pai
+        key: 'id'
+      }
+    },
     nome: {type:DataTypes.STRING, allowNull: false},
     descricao: DataTypes.TEXT,
     status: DataTypes.ENUM('ativa', 'suspensa'),
