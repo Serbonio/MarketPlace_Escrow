@@ -5,6 +5,7 @@ class UsuarioController {
 
   async create(req, res) {
     try {
+      console.log('Dados recebidos para cadastro:', req.body); // Log dos dados recebidos
       const usuario = await usuarioService.criarUsuario(req.body);
       res.status(201).json(usuario);
     } catch (error) {
@@ -16,7 +17,7 @@ class UsuarioController {
   async login(req, res) {
       try {
         const { email, senha } = req.body;
-  
+        console.log('Dados recebidos para login:', req.body); // Log dos dados recebidos
         const usuario = await usuarioService.validarLogin(email, senha);
         const token = authService.gerarToken(usuario);
   
