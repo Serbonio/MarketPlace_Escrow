@@ -1,24 +1,18 @@
 // testPedidoService.js
 const sequelize = require('../config/database');
-const repos = require('../repositories');
 const PedidoService = require('./pedidoService');
-
-const pedidoService = new PedidoService({
-  ...repos,
-  sequelize
-});
 
 async function testarPedido() {
   try {
     // 1️⃣ Dados de teste: usuário e produtos do seed
     const usuario_id = 1; // id de um usuário do seed de teste
-    const itens = [
+    const items = [
       { produto_id: 2, quantidade: 2 },
       { produto_id: 3, quantidade: 1 }
     ];
 
     // 2️⃣ Criar pedido
-    const resultado = await pedidoService.createPedido({ usuario_id, itens });
+    const resultado = await PedidoService.PedidoService(usuario_id, items);
 
     console.log('✅ Pedido criado com sucesso:');
     console.log(JSON.stringify(resultado, null, 2));
@@ -30,5 +24,4 @@ async function testarPedido() {
   }
 }
 
-// Executa a função
 testarPedido();
