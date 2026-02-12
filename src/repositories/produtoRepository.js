@@ -1,25 +1,32 @@
+// src/repositories/ProdutoRepository.js
+const BaseRepository = require('./BaseRepository');
 const Produto = require('../models/Produto');
+const { Op } = require('sequelize');
 
-class ProdutoRepository {
-    create(data) {
-        return Produto.create(data);
+class ProdutoRepository extends BaseRepository {
+    constructor() {
+        super(Produto);
     }
 
-    findAll(filters = {}) {
-        return Produto.findAll({ where: filters });
+    async findByIds(ids, options = {}) {
+        // Se 'ids' for um array, usa findAll com Op.in
+        if (Array.isArray(ids)) {
+            return await this.findAll({
+                where: {
+                    id: { [Op.in]: ids }
+                },
+                ...options
+            });
+        }
+        // Se for um único ID, usa o findById da base
+        return await super.findById(ids, options);
     }
 
-    findById(id) {
-        return Produto.findByPk(id);
-    }
-
-    async update(id, data) {
-        return await Produto.update(data, { where: { id } });
-    }
-
-    delete(id) {
-        return Produto.destroy({ where: { id } });
+    async decrementEstoque(produto, quantidade, options = {}) {
+        return await produto.decrement('estoque', {
+            by: quantidade,
+            ...options
+        });
     }
 }
-
-module.exports = new ProdutoRepository();
+module.exports = ProdutoRepository;

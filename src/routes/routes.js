@@ -4,6 +4,7 @@ const router = express.Router();
 const routesUsuarios = require('./usuarios');
 const routesLojas = require('./lojas');
 const routesProdutos = require('./produtoRoutes');
+const criarPedidoRoutes = require('./pedidoRoutes');
 // const usuarioController = require('../controllers/usuarioController');
 
 
@@ -15,5 +16,8 @@ router.use('/lojas', routesLojas);
 
 // Rotas produtos
 router.use('/produtos', routesProdutos);
+
+// Rotas pedidos
+router.use('/pedidos', criarPedidoRoutes);
 
 module.exports = router;

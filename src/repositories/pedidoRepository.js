@@ -1,26 +1,22 @@
-class PedidoRepository {
-  constructor(PedidoModel) {
-    this.Pedido = PedidoModel;
-  }
+// src/repositories/PedidoRepository.js
+const BaseRepository = require('./BaseRepository');
+const Pedido = require('../models/Pedido');
 
-  create(data, options = {}) {
-    return this.Pedido.create(data, options);
-  }
+class PedidoRepository extends BaseRepository {
+    constructor() {
+        super(Pedido);
+    }
 
-  findById(id, options = {}) {
-    return this.Pedido.findByPk(id, options);
-  }
+    async findByIds(ids, options = {}) {
+        return await this.findAll({
+            where: { id: ids },
+            ...options
+        });
+    }
 
-  update(pedido, data, options = {}) {
-    return pedido.update(data, options);
-  }
-
-  findByUsuarioId(usuarioId, options = {}) {
-    return this.Pedido.findAll({
-      where: { usuario_id: usuarioId },
-      ...options
-    });
-  }
+    // Sobrescrevendo o update para aceitar a instância do objeto
+    async update(pedido, data, options = {}) { // Agora espera a instância do pedido em vez do ID
+        return await pedido.update(data, options);
+    }
 }
-
 module.exports = PedidoRepository;

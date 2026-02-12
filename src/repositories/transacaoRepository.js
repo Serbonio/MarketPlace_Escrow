@@ -1,26 +1,17 @@
-class TransacaoRepository {
-  constructor(TransacaoModel) {
-    this.Transacao = TransacaoModel;
-  }
+// src/repositories/TransacaoRepository.js
+const BaseRepository = require('./BaseRepository');
+const Transacao = require('../models/Transacao');
 
-  create(data, options = {}) {
-    return this.Transacao.create(data, options);
-  }
+class TransacaoRepository extends BaseRepository {
+    constructor() {
+        super(Transacao);
+    }
 
-  findById(id, options = {}) {
-    return this.Transacao.findByPk(id, options);
-  }
-
-  findByEncomendaId(encomendaId, options = {}) {
-    return this.Transacao.findAll({
-      where: { encomenda_id: encomendaId },
-      ...options
-    });
-  }
-
-  update(transacao, data, options = {}) {
-    return transacao.update(data, options);
-  }
+    async findByEncomendaId(encomendaId, options = {}) {
+        return await this.findAll({
+            where: { encomenda_id: encomendaId },
+            ...options
+        });
+    }
 }
-
 module.exports = TransacaoRepository;

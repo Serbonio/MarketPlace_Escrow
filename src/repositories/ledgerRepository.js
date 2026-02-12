@@ -1,33 +1,32 @@
-class LedgerRepository {
-  constructor(LedgerModel) {
-    this.Ledger = LedgerModel;
-  }
+// src/repositories/LedgerRepository.js
+const BaseRepository = require('./BaseRepository');
+const Ledger = require('../models/Ledger');
 
-  create(data, options = {}) {
-    return this.Ledger.create(data, options);
-  }
+class LedgerRepository extends BaseRepository {
+    constructor() {
+        super(Ledger);
+    }
 
-  findByEntidade(entidadeTipo, entidadeId, options = {}) {
-    return this.Ledger.findAll({
-      where: {
-        entidade_tipo: entidadeTipo,
-        entidade_id: entidadeId
-      },
-      order: [['created_at', 'DESC']],
-      ...options
-    });
-  }
+    async findByEntidade(entidadeTipo, entidadeId, options = {}) {
+        return await this.findAll({
+            where: {
+                entidade_tipo: entidadeTipo,
+                entidade_id: entidadeId
+            },
+            order: [['created_at', 'DESC']],
+            ...options
+        });
+    }
 
-  findLastSaldo(entidadeTipo, entidadeId, options = {}) {
-    return this.Ledger.findOne({
-      where: {
-        entidade_tipo: entidadeTipo,
-        entidade_id: entidadeId
-      },
-      order: [['created_at', 'DESC']],
-      ...options
-    });
-  }
+    async findLastSaldo(entidadeTipo, entidadeId, options = {}) {
+        return await this.model.findOne({
+            where: {
+                entidade_tipo: entidadeTipo,
+                entidade_id: entidadeId
+            },
+            order: [['created_at', 'DESC']],
+            ...options
+        });
+    }
 }
-
 module.exports = LedgerRepository;

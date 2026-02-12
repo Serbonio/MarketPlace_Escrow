@@ -1,26 +1,19 @@
-class EncomendaRepository {
-  constructor(EncomendaModel) {
-    this.Encomenda = EncomendaModel;
-  }
+// src/repositories/EncomendaRepository.js
+const BaseRepository = require('./BaseRepository');
+const Encomenda = require('../models/Encomenda');
 
-  create(data, options = {}) {
-    return this.Encomenda.create(data, options);
-  }
+class EncomendaRepository extends BaseRepository {
+    constructor() {
+        super(Encomenda);
+    }
 
-  findById(id, options = {}) {
-    return this.Encomenda.findByPk(id, options);
-  }
-
-  update(encomenda, data, options = {}) {
-    return encomenda.update(data, options);
-  }
-
-  findByPedidoId(pedidoId, options = {}) {
-    return this.Encomenda.findAll({
-      where: { pedido_id: pedidoId },
-      ...options
-    });
-  }
+    // findById, create, update já existem na base.
+    
+    async findByPedidoId(pedidoId, options = {}) {
+        return await this.findAll({
+            where: { pedido_id: pedidoId },
+            ...options
+        });
+    }
 }
-
 module.exports = EncomendaRepository;

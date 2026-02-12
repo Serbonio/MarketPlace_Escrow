@@ -1,18 +1,22 @@
-class EncomendaItemRepository {
-  constructor(EncomendaItemModel) {
-    this.EncomendaItem = EncomendaItemModel;
-  }
+// src/repositories/EncomendaItemRepository.js
+const BaseRepository = require('./BaseRepository');
+const EncomendaItem = require('../models/EncomendaItem');
 
-  bulkCreate(items, options = {}) {
-    return this.EncomendaItem.bulkCreate(items, options);
-  }
+class EncomendaItemRepository extends BaseRepository {
+    constructor() {
+        super(EncomendaItem);
+    }
 
-  findByEncomendaId(encomendaId, options = {}) {
-    return this.EncomendaItem.findAll({
-      where: { encomenda_id: encomendaId },
-      ...options
-    });
-  }
+    // bulkCreate é específico, não tem na base
+    async bulkCreate(items, options = {}) {
+        return await this.model.bulkCreate(items, options);
+    }
+
+    async findByEncomendaId(encomendaId, options = {}) {
+        return await this.findAll({
+            where: { encomenda_id: encomendaId },
+            ...options
+        });
+    }
 }
-
 module.exports = EncomendaItemRepository;

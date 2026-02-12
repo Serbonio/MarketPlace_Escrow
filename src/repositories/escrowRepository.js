@@ -1,22 +1,17 @@
-class EscrowRepository {
-  constructor(EscrowModel) {
-    this.Escrow = EscrowModel;
-  }
+// src/repositories/EscrowRepository.js
+const BaseRepository = require('./BaseRepository');
+const Escrow = require('../models/Escrow');
 
-  create(data, options = {}) {
-    return this.Escrow.create(data, options);
-  }
+class EscrowRepository extends BaseRepository {
+    constructor() {
+        super(Escrow);
+    }
 
-  findByEncomendaId(encomendaId, options = {}) {
-    return this.Escrow.findOne({
-      where: { encomenda_id: encomendaId },
-      ...options
-    });
-  }
-
-  update(escrow, data, options = {}) {
-    return escrow.update(data, options);
-  }
+    async findByEncomendaId(encomendaId, options = {}) {
+        return await this.model.findOne({
+            where: { encomenda_id: encomendaId },
+            ...options
+        });
+    }
 }
-
 module.exports = EscrowRepository;
