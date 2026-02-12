@@ -22,6 +22,10 @@ class BaseRepository {
         return await record.update(data, options);
     }
 
+    async count(options = {}) {
+        return await this.model.count(options);
+    }
+
     async delete(id, options = {}) {
         const record = await this.findById(id, options);
         if (!record) throw new Error('Registro não encontrado');
