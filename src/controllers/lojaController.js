@@ -1,3 +1,4 @@
+const { tr } = require('@faker-js/faker');
 const lojaService = require('../services/lojaService');
 
 class LojaController {
@@ -5,10 +6,13 @@ class LojaController {
     try {
       // Assumindo que você quer salvar qual usuário criou a loja
       // const dadosComUsuario = { ...req.body, usuario_id: req.userId };
+      console.log('Dados recebidos para criar loja:', req.body);
       const loja = await lojaService.criarLoja(req.userId, req.body);
       res.status(201).json(loja);
+      console.log('Loja criada com sucesso:', loja);
     } catch (error) {
       res.status(400).json({ error: error.message });
+
     }
   }
 
@@ -32,6 +36,19 @@ class LojaController {
     }
   }
 
+  async lojaPorUsuarioID(req, res){
+    try{
+      const lojaUsuario = await lojaService.buscarLojaByUsuarioID(req.params.id)
+
+      
+      
+      res.json(lojaUsuario
+      );
+    }catch (error){
+      res.status(404).json({error: error.message})
+    }
+  }
+
   async update(req, res) {
     try {
       const usuario = { id: req.userId, tipo: req.userTipo };
@@ -41,6 +58,17 @@ class LojaController {
       res.status(400).json({ error: error.message });
     }
   }
+
+  async alterarStatus(req, res) {
+    try {
+      const usuario = { id: req.userId, tipo: req.userTipo };
+      const { status } = req.body;
+      const loja = await lojaService.alterarStatusLoja(req.params.id, usuario, status);
+      res.json(loja);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    } 
+  } 
 
   async delete(req, res) {
     try {

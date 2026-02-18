@@ -1,34 +1,26 @@
-const lojaRepository = require('../repositories/lojaRepository');
-
+const {lojaRepo}= require('../repositories/index');
+const lojaRepository =lojaRepo; 
 class LojaService {
 
   async criarLoja(usuario_id, data) {
-    console.log('Criando loja para usuário_id:', usuario_id);
-    console.log('Dados da loja:', data);
+    console.log('Criando loja com dados:', data, 'para usuário ID:', usuario_id);
 
-    console.log('--- DEBUG SERVICE ---');
-  console.log('Usuario ID recebido:', usuario_id);
-  console.log('Tipo de dado do ID:', typeof usuario_id);
-  console.log('Dados da loja:', data);
-  console.log('---------------------');
-  
     const lojaExiste = await lojaRepository.findByUsuarioId(usuario_id);
-    if (lojaExiste) {
-      throw new Error('Usuário já possui uma loja');
-    }
-
+    // if (lojaExiste) {
+    //   throw new Error('Usuário já possui uma loja');
+    // }
     return lojaRepository.create({
       ...data,
       usuario_id,
     });
   }
 
-  listarLojas(status) {
+  async listarLojas(status) {
     const filters = {};
     if (status) {
       filters.status = status; // Ex: 'ativa', 'suspensa'
     }
-    return lojaRepository.findAll(filters);
+    return await lojaRepository.findAll(filters);
   }
 
   async buscarLoja(id) {
@@ -36,6 +28,14 @@ class LojaService {
     if (!loja) {
       throw new Error('Loja não encontrada');
     }
+    return loja;
+  }
+// Funcao que busca loja com base no usuario
+  async buscarLojaByUsuarioID(usuario_id){
+    const loja = lojaRepository.findByUsuarioId(usuario_id);
+    if(!loja){
+        throw new Error("Precisa criar uma Loja")
+      }
     return loja;
   }
 
@@ -49,6 +49,13 @@ class LojaService {
     await loja.update(data);
     return loja;
   }
+
+  async alterarStatusLoja(id, usuario, status) {
+    const loja = await this.buscarLoja(id);
+    const lojaAlterada = await this.atualizarLoja(id, usuario, { status });
+    return lojaAlterada;
+  }
+
 
   async removerLoja(id, usuario) {
     const loja = await this.buscarLoja(id);

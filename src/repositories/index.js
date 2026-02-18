@@ -6,8 +6,8 @@ const ProdutoRepository = require('./produtoRepository');
 const EscrowRepository = require('./escrowRepository');
 const TransacaoRepository = require('./transacaoRepository');
 const LedgerRepository = require('./ledgerRepository');
-// const LojaRepository = require('./lojaRepository');
-// const UsuarioRepository = require('./usuarioRepository');
+const LojaRepository = require('./lojaRepository');
+const UsuarioRepository = require('./usuarioRepository');
 
 module.exports = {
     pedidoRepo: new PedidoRepository(),
@@ -17,6 +17,6 @@ module.exports = {
     escrowRepo: new EscrowRepository(),
     transacaoRepo: new TransacaoRepository(),
     ledgerRepo: new LedgerRepository(),
-    // lojaRepo: new LojaRepository(),
-    // usuarioRepo: new UsuarioRepository(),
+    lojaRepo: new LojaRepository(),
+    usuarioRepo: new UsuarioRepository(),
 };

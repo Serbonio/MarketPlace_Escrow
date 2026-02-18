@@ -4,7 +4,11 @@ class ProdutoController {
     async create(req, res) {
         try {
             const { loja_id } = req.params; // Loja vem da URL
-            const produto = await produtoService.criarProduto(loja_id, req.userId, req.body);
+            console.log(req.body ,loja_id)
+            const produto = await produtoService.criarProduto(loja_id, req.userId, {
+                ...req.body,
+                preco: req.body.precoVenda
+            });
             res.status(201).json(produto);
         } catch (error) {
             res.status(400).json({ error: error.message });
@@ -33,6 +37,16 @@ class ProdutoController {
     async update(req, res) {
         try {
             const produto = await produtoService.atualizarProduto(req.params.id, req.body);
+            res.json(produto);
+        } catch (error) {
+            res.status(400).json({ error: error.message });
+        }
+    }
+
+    async alterarStatus(req, res) {
+        try {
+            const { status } = req.body; // Espera { "status": true/false } 
+            const produto = await produtoService.alterarStatus(req.params.id, status);
             res.json(produto);
         } catch (error) {
             res.status(400).json({ error: error.message });

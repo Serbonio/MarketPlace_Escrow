@@ -210,6 +210,5 @@ async function liberarEscrow(encomenda_id, confirmado_por){
         // 🔐 COMMIT (automático pela transaction managed)  
         });
 }
-module.exports = {
-    PedidoService
-};
+
+module.exports = {criarPedidoPagar, liberarEscrow};

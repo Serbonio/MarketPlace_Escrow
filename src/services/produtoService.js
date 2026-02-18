@@ -1,5 +1,5 @@
-const produtoRepository = require('../repositories/produtoRepository');
-const lojaRepository = require('../repositories/lojaRepository');
+const produtoRepository = require('../repositories/index').produtoRepo;
+const lojaRepository = require('../repositories/index').lojaRepo;
 
 class ProdutoService {
     async criarProduto(loja_id, usuario_id, data) {
@@ -34,7 +34,16 @@ class ProdutoService {
         return await this.buscarProduto(id);
     }
 
+    async alterarStatus(id,status) {
+        const produto = await this.buscarProduto(id);
+        await produto.update({ativo: status});
+        
+        if (!produto) throw new Error('Produto não encontrado ou sem alterações');
+        
+        return produto;
+    }
     async removerProduto(id) {
+        console.log(id)
         const deleted = await produtoRepository.delete(id);
         if (!deleted) throw new Error('Produto não encontrado');
         return deleted;

@@ -1,5 +1,5 @@
 // src/repositories/EscrowRepository.js
-const BaseRepository = require('./BaseRepository');
+const BaseRepository = require('./baseRepository');
 const Escrow = require('../models/Escrow');
 
 class EscrowRepository extends BaseRepository {

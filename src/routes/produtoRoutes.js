@@ -12,10 +12,11 @@ router.get('/:id', produtoController.show);
 router.use(authMiddleware);
 
 // Criar produto dentro de uma loja específica
-router.post('/loja/:loja_id', checkPermission('vendedor', 'admin'), produtoController.create);
+router.post('/loja/:loja_id/produtos', checkPermission('vendedor', 'admin'), produtoController.create);
 
 // Atualizar e deletar
 router.put('/:id', checkPermission('vendedor', 'admin'), produtoController.update);
-router.delete('/:id', checkPermission('admin'), produtoController.delete);
+router.put('/:id/status', checkPermission('vendedor', 'admin'), produtoController.alterarStatus);
+router.delete('/:id', checkPermission('admin', 'vendedor'), produtoController.delete);
 
 module.exports = router;

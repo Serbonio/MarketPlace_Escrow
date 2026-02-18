@@ -36,8 +36,6 @@ class UsuarioController {
     }
 
   async index(req, res) {
-    console.log('Tipo do usuário:', req.tipo); // Verificar o tipo do usuário
-    console.log('ID do usuário:', req.userId); // Verificar o ID do usuário
     const usuarios = await usuarioService.listarUsuarios();
     res.json(usuarios);
   }
@@ -51,13 +49,45 @@ class UsuarioController {
     }
   }
 
+  async myPerfil(req,res){
+    try {
+      const usuario = await usuarioService.listarPerfil(req.usuario.id);
+      res.json(usuario);
+    } catch (error) {
+      res.status(404).json({ error: error.message });
+    }
+  }
+// Implementação do método update
   async update(req, res) {
     try {
+      console.log(req.body)
       const usuario = await usuarioService.atualizarUsuario(
         req.params.id,
         req.body
       );
       res.json(usuario);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  }
+
+  async alterarSenha(req, res) {
+    try {
+      const { senha } = req.body;
+      const usuarioId = req.params.id;
+      console.log(usuarioId, senha);
+      await usuarioService.atualizarSenha(usuarioId, senha);
+      res.json({ message: 'Senha atualizada com sucesso' });
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    } 
+  }
+
+  async actualizarStatus(req, res) {
+    try {
+      const { status } = req.body;  
+      const { usuario, message } = await usuarioService.actualizarStatus(req.params.id, status);
+      res.json({usuario, message});
     } catch (error) {
       res.status(400).json({ error: error.message });
     }

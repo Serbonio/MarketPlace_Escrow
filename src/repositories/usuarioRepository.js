@@ -1,30 +1,19 @@
 const Usuario = require('../models/Usuario');
+const baseRepository = require('./BaseRepository');
 
-class UsuarioRepository {
+class UsuarioRepository extends baseRepository {
+  constructor() {
+    super(Usuario);
+  };
 
-  create(data) {
-    return Usuario.create(data);
+  async findAll(filter={} ,options = {}) {
+        return await this.model.findAll(filter,options);
+    } 
+
+  async findByEmail(email, options = {}) {
+    return await this.model.findOne({ where: { email } }, options);
   }
 
-  findAll() {
-    return Usuario.findAll();
-  }
-
-  findById(id) {
-    return Usuario.findByPk(id);
-  }
-
-  findByEmail(email) {
-    return Usuario.findOne({ where: { email } });
-  }
-
-  update(id, data) {
-    return Usuario.update(data, { where: { id } });
-  }
-
-  delete(id) {
-    return Usuario.destroy({ where: { id } });
-  }
 }
 
-module.exports = new UsuarioRepository();
+module.exports = UsuarioRepository;

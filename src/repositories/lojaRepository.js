@@ -1,32 +1,24 @@
 const Loja = require('../models/Loja');
+const baseRepository = require('./BaseRepository');
 
-class LojaRepository {
-  create(data) {
-    console.log('Dados recebidos no Repo:', data);
-    return Loja.create(data);
-  }
-
+class LojaRepository extends baseRepository {
+  constructor() {
+    super(Loja);
+    }
   // findAll agora aceita um objeto 'where' para filtros
-  findAll(filters = {}) {
-    return Loja.findAll({ where: filters });
+  async findAll(filters = {}, options = {}) {
+    return await this.model.findAll({ where: filters }, options);
   }
 
-  findById(id) {
-    return Loja.findByPk(id);
-  }
 
-  findByUsuarioId(usuario_id) {
-    return Loja.findOne({ where: { usuario_id } });
+  async findByUsuarioId(usuario_id, options = {}) {
+    return await this.model.findOne({ where: { usuario_id}, options});
   }
   
   // update retorna [quantidadeAfetada]
-  async update(id, data) {
-    return await Loja.update(data, { where: { id } });
-  }
-
-  delete(id) {
-    return Loja.destroy({ where: { id } });
+  async update(id, data, options = {}) {
+    return await this.model.update(data, { where: { id }, options});
   }
 }
 
-module.exports = new LojaRepository();
+module.exports = LojaRepository;

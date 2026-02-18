@@ -9,6 +9,7 @@ class AuthService {
         id: usuario.id,
         nome: usuario.nome,
         email: usuario.email,
+        telefone: usuario.telefone,
         tipo: usuario.tipo,
       },
       process.env.JWT_SECRET,
