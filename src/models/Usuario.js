@@ -30,8 +30,8 @@ const Usuario = sequelize.define('Usuario', {
 });
 
 Usuario.associate = (models) => {
-  Usuario.hasMany(models.Produto, { foreignKey: 'vendedor_id', as: 'produtos' });
-  Usuario.hasMany(models.Pedido, { foreignKey: 'cliente_id', as: 'pedidos' });
+  Usuario.hasMany(models.Loja, { foreignKey: 'usuario_id', as: 'lojas' });
+  Usuario.hasMany(models.Pedido, { foreignKey: 'usuario_id', as: 'pedidos' });
 };
 
 module.exports = Usuario;

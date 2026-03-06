@@ -8,6 +8,8 @@ const TransacaoRepository = require('./transacaoRepository');
 const LedgerRepository = require('./ledgerRepository');
 const LojaRepository = require('./lojaRepository');
 const UsuarioRepository = require('./usuarioRepository');
+const ProdutoImagemRepository = require('./produtoImagemRepository');
+const CategoriaRepository = require('./categoriaRepository')
 
 module.exports = {
     pedidoRepo: new PedidoRepository(),
@@ -19,4 +21,6 @@ module.exports = {
     ledgerRepo: new LedgerRepository(),
     lojaRepo: new LojaRepository(),
     usuarioRepo: new UsuarioRepository(),
+    produtoImagemRepo: new ProdutoImagemRepository(),
+    categoriaRepo: new CategoriaRepository()
 };

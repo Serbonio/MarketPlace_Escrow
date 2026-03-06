@@ -7,6 +7,7 @@ async function listarEncomendasPorPedido(pedidoId) {
     return await encomendaRepository.findByPedidoId(pedidoId);
 }
 async function listarEncomendaPorId(id) {
+    console.log(id)
     return await encomendaRepository.findById(id);
 }
 async function actualizarStatus(id, status) {

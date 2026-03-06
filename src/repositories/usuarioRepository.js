@@ -1,4 +1,4 @@
-const Usuario = require('../models/Usuario');
+const {Usuario} = require('../models');
 const baseRepository = require('./BaseRepository');
 
 class UsuarioRepository extends baseRepository {

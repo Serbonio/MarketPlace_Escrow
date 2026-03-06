@@ -1,6 +1,6 @@
 // src/repositories/LedgerRepository.js
 const BaseRepository = require('./BaseRepository');
-const Ledger = require('../models/Ledger');
+const {Ledger} = require('../models');
 
 class LedgerRepository extends BaseRepository {
     constructor() {

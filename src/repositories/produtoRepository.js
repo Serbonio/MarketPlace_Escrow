@@ -1,6 +1,5 @@
-// src/repositories/ProdutoRepository.js
 const BaseRepository = require('./BaseRepository');
-const Produto = require('../models/Produto');
+const { Produto, ProdutoImagem, Categoria } = require('../models');
 const { Op } = require('sequelize');
 
 class ProdutoRepository extends BaseRepository {
@@ -8,25 +7,56 @@ class ProdutoRepository extends BaseRepository {
         super(Produto);
     }
 
+    // Busca produto com imagens e categoria inclusas
+    async findFullDetails(id, options = {}) {
+        return await this.findById(id, {
+            include: [
+                { model: ProdutoImagem, as: 'imagens' },
+                { model: Categoria, as: 'categoria' }
+            ],
+            ...options
+        });
+    }
+
+    async produtosDaLoja(loja_id, options = {}) { // Adicionei options como parâmetro
+        return await this.findAll({
+            where: { 
+                loja_id: loja_id 
+            }, 
+            include: [
+                {
+                    model: ProdutoImagem,
+                    as: 'imagens',
+                    attributes: ['id', 'url']
+                },
+                {
+                    model: Categoria,
+                    as: 'categoria'
+                }
+            ],
+            ...options // Agora a variável entra corretamente na query
+        });
+    }
+
     async findByIds(ids, options = {}) {
-        // Se 'ids' for um array, usa findAll com Op.in
         if (Array.isArray(ids)) {
             return await this.findAll({
-                where: {
-                    id: { [Op.in]: ids }
+                where: { 
+                    id: { [Op.in]: ids } 
                 },
                 ...options
             });
         }
-        // Se for um único ID, usa o findById da base
         return await super.findById(ids, options);
     }
 
     async decrementEstoque(produto, quantidade, options = {}) {
+        // 'produto' aqui deve ser uma instância do Sequelize
         return await produto.decrement('estoque', {
             by: quantidade,
             ...options
         });
     }
 }
+
 module.exports = ProdutoRepository;

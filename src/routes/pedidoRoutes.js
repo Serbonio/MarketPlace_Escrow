@@ -8,7 +8,7 @@ router.use(authMiddleware);
 
 router.post('/',checkpermission('cliente'),criarPedidoController.criarPedido);
 router.get('/', checkpermission('admin'), criarPedidoController.listarPedidos);
-router.get('/',checkpermission('cliente'), criarPedidoController.obterPedidos);
+router.get('/cliente/:id',checkpermission('cliente'), criarPedidoController.listarPedidosUsuario);
 router.put('/:id/cancel',checkpermission('cliente'), criarPedidoController.cancelarPedido);
 
 module.exports = router;

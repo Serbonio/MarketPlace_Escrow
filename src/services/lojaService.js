@@ -38,6 +38,12 @@ class LojaService {
       }
     return loja;
   }
+  async DadosCompletosLoja(loja_id){
+      const loja = lojaRepository.findLojaCompleta(loja_id)
+      if(!loja) 
+        throw new Error("Loja não encontrada")
+      return loja
+  }
 
   async atualizarLoja(id, usuario, data) {
     const loja = await this.buscarLoja(id);

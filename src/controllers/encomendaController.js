@@ -22,7 +22,9 @@ async function listarEncomendasPorPedido(req, res) {
 async function listarEncomendaPorId(req, res) {
     try {
         const id = req.params.id;
+        console.log(id)
         const encomenda = await encomendaService.listarEncomendaPorId(id);
+        console.log(encomenda)
         if (encomenda) {
             res.json(encomenda);
         } else {
@@ -30,6 +32,7 @@ async function listarEncomendaPorId(req, res) {
         }
     } catch (error) {
         res.status(500).json({ error: 'Erro ao listar encomenda por ID' });
+        console.error(error)
     }
 }
 

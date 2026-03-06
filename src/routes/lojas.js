@@ -12,6 +12,8 @@ router.use(authMiddleware);
 
 // Rotas
 router.get("/usuarios/loja/:id", checkPermission('vendedor', 'admin'), lojaController.lojaPorUsuarioID)
+router.get("/loja/:id", checkPermission('vendedor', 'admin'), lojaController.dadosCompletosLoja)
+
 router.post('/', checkPermission('vendedor', 'admin'), lojaController.create);
 router.put('/:id', checkPermission('vendedor', 'admin'), lojaController.update);
 router.patch('/:id/status', checkPermission('admin'), lojaController.alterarStatus);

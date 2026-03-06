@@ -15,6 +15,40 @@ const Pedido = sequelize.define('Pedido', {
   status: {
     type: DataTypes.ENUM('criado', 'pago', 'parcialmente_concluido', 'concluido', 'cancelado'),
     defaultValue: 'criado'
+  },
+  nome_completo: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  telefone_contacto: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  provincia: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  cidade: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  endereco_completo: {
+    type: DataTypes.TEXT,
+    allowNull: false
+  },
+  codigo_postal: {
+    type: DataTypes.STRING,
+    allowNull: true
+  },
+  referencia_encontro: {
+    type: DataTypes.TEXT,
+    allowNull: true
+  },
+  
+  // --- PAGAMENTO ---
+  metodo_pagamento: {
+    type: DataTypes.ENUM('multicaixa_express', 'transferencia', 'pagamento_entrega', 'carteira_digital'),
+    allowNull: false
   }
 }, {
   // OPÇÕES

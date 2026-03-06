@@ -6,7 +6,9 @@ const checkPermissions = require('../middlewares/permissionMiddleware');
 
 router.use(authMiddleware);
 
-router.get('/', checkPermissions('admin', 'vendedor'), encomendaController.listarEncomendas);
-router.get('/pedido/:pedidoId', checkPermissions('admin', 'vendedor'), encomendaController.listarEncomendasPorPedido);
+router.get('/', checkPermissions('admin', 'vendedor','cliente'), encomendaController.listarEncomendas);
+router.get('/pedido/:pedidoId', checkPermissions('admin', 'vendedor', 'cliente'), encomendaController.listarEncomendasPorPedido);
 router.get('/:id', checkPermissions('admin', 'vendedor', 'cliente'), encomendaController.listarEncomendaPorId);
 router.put('/:id/status', checkPermissions('admin', 'vendedor'), encomendaController.actualizarStatus);
+
+module.exports= router;

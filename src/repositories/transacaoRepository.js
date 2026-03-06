@@ -1,6 +1,6 @@
 // src/repositories/TransacaoRepository.js
 const BaseRepository = require('./BaseRepository');
-const Transacao = require('../models/Transacao');
+const {Transacao} = require('../models');
 
 class TransacaoRepository extends BaseRepository {
     constructor() {

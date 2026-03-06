@@ -39,9 +39,6 @@ class LojaController {
   async lojaPorUsuarioID(req, res){
     try{
       const lojaUsuario = await lojaService.buscarLojaByUsuarioID(req.params.id)
-
-      
-      
       res.json(lojaUsuario
       );
     }catch (error){
@@ -49,6 +46,14 @@ class LojaController {
     }
   }
 
+  async dadosCompletosLoja(req, res){
+    try{
+      const dadosLoja = await lojaService.DadosCompletosLoja(req.params.id)
+      res.status(200).json(dadosLoja)
+    }catch(err){
+      res.status(500).json({error: err.message})
+    }
+  }
   async update(req, res) {
     try {
       const usuario = { id: req.userId, tipo: req.userTipo };

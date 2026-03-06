@@ -3,20 +3,31 @@ const router = express.Router();
 const authMiddleware = require('../middlewares/authMiddleware');
 const checkPermission = require('../middlewares/permissionMiddleware');
 const produtoController = require('../controllers/produtoController');
+const upload = require('../config/multer');
+const lojaController = require('../controllers/lojaController');
 
-// Listar produtos (público ou logado)
+// --- ROTAS PÚBLICAS ---
+// Qualquer visitante pode ver a vitrine
 router.get('/', produtoController.index);
 router.get('/:id', produtoController.show);
 
-// Rotas protegidas
+// --- ROTAS PROTEGIDAS ---
 router.use(authMiddleware);
 
-// Criar produto dentro de uma loja específica
-router.post('/loja/:loja_id/produtos', checkPermission('vendedor', 'admin'), produtoController.create);
+// Criar produto: Vinculado à loja do vendedor
+// O front-end deve enviar o ID da loja na URL: /produtos/loja/5/produtos
+router.post('/loja/:loja_id/produtos', checkPermission('vendedor', 'admin'), upload.array('imagens', 10), produtoController.create);
 
-// Atualizar e deletar
-router.put('/:id', checkPermission('vendedor', 'admin'), produtoController.update);
+router.get(`/loja/:loja_id`, produtoController.produtosDaLoja)
+
+// Atualizar dados do produto
+router.put('/:id', checkPermission('vendedor', 'admin'), upload.array('imagens', 10),produtoController.update);
+
+// Alterar status (Ativar/Inativar/Pausar)
+// Mantive o método put por ser uma alteração de estado
 router.put('/:id/status', checkPermission('vendedor', 'admin'), produtoController.alterarStatus);
-router.delete('/:id', checkPermission('admin', 'vendedor'), produtoController.delete);
+
+// Deletar produto
+router.delete('/:id', checkPermission('vendedor', 'admin'), produtoController.delete);
 
 module.exports = router;
