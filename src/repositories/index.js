@@ -10,6 +10,7 @@ const LojaRepository = require('./lojaRepository');
 const UsuarioRepository = require('./usuarioRepository');
 const ProdutoImagemRepository = require('./produtoImagemRepository');
 const CategoriaRepository = require('./categoriaRepository')
+const PagamentoRepository = require('./pagamentoRepository')
 
 module.exports = {
     pedidoRepo: new PedidoRepository(),
@@ -22,5 +23,6 @@ module.exports = {
     lojaRepo: new LojaRepository(),
     usuarioRepo: new UsuarioRepository(),
     produtoImagemRepo: new ProdutoImagemRepository(),
-    categoriaRepo: new CategoriaRepository()
+    categoriaRepo: new CategoriaRepository(),
+    pagamentoRepo: new PagamentoRepository()
 };

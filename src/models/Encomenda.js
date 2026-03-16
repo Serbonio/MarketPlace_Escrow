@@ -12,7 +12,8 @@ const Encomenda = sequelize.define('Encomenda', {
   delivery_token: DataTypes.STRING,
   metodo_confirmacao: { 
     type: DataTypes.ENUM('token', 'otp', 'assinatura digital', 'manual', 'automatico'),
-    allowNull: false
+    allowNull: false, 
+    defaultValue:'token'
   }
 }, { tableName: 'encomenda', timestamps: true, underscored: true });
 

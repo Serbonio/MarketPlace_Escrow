@@ -44,12 +44,12 @@ async function registrarPedidoCompleto(usuario_id, items, dadosEntrega, t) {
         // --- NOVOS CAMPOS ---
         nome_completo: dadosEntrega.nome_completo,
         telefone_contacto: dadosEntrega.telefone_contacto,
+        email:dadosEntrega.email,
         provincia: dadosEntrega.provincia,
         cidade: dadosEntrega.cidade,
         endereco_completo: dadosEntrega.endereco_completo,
         codigo_postal: dadosEntrega.codigo_postal,
         referencia_encontro: dadosEntrega.referencia_encontro,
-        metodo_pagamento: dadosEntrega.metodo_pagamento
     }, { transaction: t });
 
     const encomendasCriadas = [];
@@ -139,7 +139,6 @@ async function confirmarPagamentoPedido(pedidoId, encomendas, usuario_id) {
                 transacao_id: transacao.id,
                 tipo: 'debito',
                 valor: encomenda.total,
-                saldo_resultante:0
             }, { transaction: t });
             
             // Registro no Ledger (Crédito Sistema - O dinheiro fica no sistema)
@@ -149,7 +148,6 @@ async function confirmarPagamentoPedido(pedidoId, encomendas, usuario_id) {
                 transacao_id: transacao.id,
                 tipo: 'credito',
                 valor: encomenda.total,
-                saldo_resultante:encomenda.total
             }, { transaction: t });
             
             // Ativa o Escrow (Dinheiro retido até a entrega)
@@ -218,7 +216,6 @@ async function liberarEscrow(encomenda_id, confirmado_por) {
             entidade_tipo:"loja",
             tipo: 'credito',
             valor: valorTotal,
-            saldo_resultante:valorTotal,
             status: 'concluido',
             // descricao: `Liberação de saldo: Encomenda #${encomenda.id}`
         }, { transaction: t });
@@ -231,7 +228,6 @@ async function liberarEscrow(encomenda_id, confirmado_por) {
             usuario_id: 1, // ID da sua conta Admin
             tipo: 'debito',
             valor: valorTotal,
-            saldo_resultante:0,
             status: 'concluido',
             // descricao: `Comissão Marketplace: Encomenda #${encomenda.id}`
         }, { transaction: t });

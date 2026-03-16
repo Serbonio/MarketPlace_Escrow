@@ -8,7 +8,8 @@ const criarPedidoRoutes = require('./pedidoRoutes');
 const routesEncomendas = require('./encomendaRoutes')
 const routesEncomendasItem = require('./encomendaItemRoutes')
 const routesEscrow = require('./escrowRoutes')
-const routeWebhook = require('../services/external/appPay/webook/appypay')
+const routesPagamentos = require('./pagamentosRoutes')
+
 // // Rotas usuarios
 router.use('/usuarios', routesUsuarios);
 
@@ -29,5 +30,8 @@ router.use('/encomendaItem', routesEncomendasItem)
 
 // Rotas Escrow 
 router.use("/escrow", routesEscrow)
+
+// Pagamento
+router.use('/pagamentos', routesPagamentos)
 
 module.exports = router;

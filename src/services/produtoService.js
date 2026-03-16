@@ -1,7 +1,6 @@
 const { produtoRepo, produtoImagemRepo, categoriaRepo } = require('../repositories/index');
 const sequelize = require('../config/database'); 
 const { Op} = require('sequelize');
-const imagemService = require('./imagemService');
 
 class ProdutoService {
     constructor() {

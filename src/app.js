@@ -4,7 +4,7 @@ const cors = require('cors');
 const routes = require('./routes/routes');
 
 // Webhook
-const routeWebhook = require('./services/external/appPay/webook/appypay')
+const routeWebhook = require('./services/external/appPay/webook/WebhookController')
 const path = require('path');
 const models = require('./models/index')
 

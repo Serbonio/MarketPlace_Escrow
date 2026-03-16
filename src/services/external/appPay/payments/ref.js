@@ -4,7 +4,7 @@ const {apiCall} = require('../client')
 
 const REF_PAYMENT_METHOD = `REF_${process.env.APPYPAY_REF_APP_KEY}`;
 
-async function createREFCharge({ amount, orderId, dueDate, customerPhone, customerEmail }) {
+async function createREFCharge({ amount, orderId, customerPhone, customerEmail }) {
   const merchantTransactionId = `R${orderId}${Date.now().toString().slice(-6)}`;
 
   // OPÇÃO A: Deixar o gateway gerar a referência (recomendado)
@@ -41,7 +41,7 @@ async function createREFCharge({ amount, orderId, dueDate, customerPhone, custom
       reference: ref.referenceNumber, // ex: "123456789"
       entity: ref.entity,             // ex: "00348"
       dueDate: ref.dueDate,
-      status: 'pending' // cliente ainda não pagou
+      status: 'pendente' // cliente ainda não pagou
     };
   }
 
@@ -49,10 +49,10 @@ async function createREFCharge({ amount, orderId, dueDate, customerPhone, custom
 }
 
 module.exports = { createREFCharge };
-```
+// ```
 
-**Fluxo REF:**
-```
+// **Fluxo REF:**
+// ```
 // Seu sistema cria cobrança → Recebe referência + entidade
 // → Mostra ao cliente: "Pague na referência 123456789, Entidade 00348"
 // → Cliente paga no ATM/App (pode demorar horas/dias)

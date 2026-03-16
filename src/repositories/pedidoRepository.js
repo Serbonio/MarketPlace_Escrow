@@ -6,7 +6,7 @@ class PedidoRepository extends BaseRepository {
     constructor() {
         super(Pedido);
     }
-
+    
     async findByIds(id, options = {}) {
         return await this.findAll({
             where: { id: id },

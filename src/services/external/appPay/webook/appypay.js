@@ -1,14 +1,7 @@
 // webhook/appypay.js (Express.js)
-const express = require('express');
-const router = express.Router();
+const {pagamentoRepo, pedidoRepo} = require('../../../../repositories/index')
 
-router.post('/webhook/appypay', async (req, res) => {
-  // Responder 200 IMEDIATAMENTE — a AppyPay pode re-tentar se demorar
-  res.status(200).json({ received: true });
 
-  // Processar em background
-  processWebhook(req.body).catch(console.error);
-});
 
 async function processWebhook(payload) {
   console.log('Webhook recebido:', JSON.stringify(payload));
@@ -16,17 +9,15 @@ async function processWebhook(payload) {
   const { id, merchantTransactionId, responseStatus } = payload;
 
   // Verificar se é uma transacção sua
-  const order = await db.orders.findOne({
-    where: { appypayMerchantId: merchantTransactionId }
-  });
+  const pagamento = await pagamentoRepo.findByMerchantTransactionId(merchantTransactionId)
 
-  if (!order) {
+  if (!pagamento) {
     console.warn('Transacção desconhecida:', merchantTransactionId);
     return;
   }
 
   // Evitar processar duplicados (idempotência)
-  if (order.paymentStatus === 'paid') {
+  if (pagamento.pagamento_status === 'pago') {
     console.log('Já processado:', merchantTransactionId);
     return;
   }
@@ -35,28 +26,30 @@ async function processWebhook(payload) {
                     responseStatus.status === 'Success';
 
   if (isSuccess) {
-    await db.orders.update(
+    await pagamentoRepo.update(
       {
-        paymentStatus: 'paid',
-        appypayTransactionId: id,
-        paidAt: new Date()
+        pagamento_status: isSuccess ? 'pago':"falhou",
+        gateway_transaction_id: id,
+        confirmed_at: new Date(),
+        gateway_response: payload,
       },
-      { where: { id: order.id } }
+      { where: { id: pagamento.id } }
     );
 
     // Disparar outras acções: email, activar serviço, etc.
-    await sendConfirmationEmail(order);
-    await activateService(order);
+    // await sendConfirmationEmail(order);
+    // await activateService(order);
 
   } else {
-    await db.orders.update(
+    await pagamentoRepo.update(
       {
-        paymentStatus: 'failed',
-        paymentError: responseStatus.message
+        pagamento_status: 'failed',
+        gateway_response: payload
       },
-      { where: { id: order.id } }
+      { where: { id: pagamento.id } }
     );
+    console.log(console.error(responseStatus.message))
   }
 }
 
-module.exports = router;
+module.exports = {processWebhook};
