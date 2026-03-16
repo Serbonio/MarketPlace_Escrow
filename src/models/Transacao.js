@@ -1,41 +1,55 @@
-// src/models/Transacao.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Transacao = sequelize.define('Transacao', {
-  // ATRIBUTOS (Baseado na migration, id omitido)
+  // ATRIBUTOS
   encomenda_id: {
     type: DataTypes.INTEGER,
-    allowNull: false // Adicionado para garantir integridade, dado que é FK
+    allowNull: true // Alterado para true conforme seu esquema de banco de dados
   },
-  tipo: {
-    type: DataTypes.ENUM('pagamento', 'liberacao', 'reembolso')
+  pedido_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  levantamento_id: {
+    type: DataTypes.INTEGER,
+    allowNull: true
+  },
+  tipo_evento: {
+    type: DataTypes.ENUM('pagamento_pedido', 'liberar_escrow', 'devolucao', 'saque'),
+    allowNull: false
   },
   valor: {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
   status: {
-    type: DataTypes.ENUM('pendente', 'confirmada', 'falhou')
+    type: DataTypes.ENUM('pendente', 'confirmada', 'falhou'),
+    defaultValue: 'pendente'
   }
 }, {
   // OPÇÕES
   tableName: 'transacao',
-  timestamps: true, // Migration tem created_at, mas não updated_at
+  timestamps: true,
   createdAt: 'created_at',
-  updatedAt: false, // Explicitando que não há updated_at
-  underscored: true // Migration usa snake_case
+  updatedAt: false, // Mantendo como você definiu originalmente
+  underscored: true
 });
 
 // LIGAÇÕES (Associações)
 Transacao.associate = (models) => {
-  // Pertence a
   Transacao.belongsTo(models.Encomenda, {
     foreignKey: 'encomenda_id',
     as: 'encomenda'
   });
-  
-  // Tem muitos
+  Transacao.belongsTo(models.Pedido, {
+    foreignKey: 'pedido_id',
+    as: 'pedido'
+  });
+  Transacao.belongsTo(models.Levantamento, {
+    foreignKey: 'levantamento_id',
+    as: 'levantamento'
+  });
   Transacao.hasMany(models.Ledger, {
     foreignKey: 'transacao_id',
     as: 'ledgers'

@@ -1,33 +1,21 @@
-// src/models/Encomenda.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const Encomenda = sequelize.define('Encomenda', {
-  // ATRIBUTOS (Baseado na migration, id omitido)
-  pedido_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  loja_id: {
-    type: DataTypes.INTEGER,
-    allowNull: false
-  },
-  total: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
-  },
-  status: {
-    type: DataTypes.ENUM('criada', 'paga', 'enviada', 'concluida', 'cancelada'),
+  pedido_id: { type: DataTypes.INTEGER, allowNull: false },
+  loja_id: { type: DataTypes.INTEGER, allowNull: false },
+  total: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
+  status: { 
+    type: DataTypes.ENUM('criada', 'paga', 'enviada', 'entregue', 'concluida', 'cancelada'),
     defaultValue: 'criada'
+  },
+  delivery_token: DataTypes.STRING,
+  metodo_confirmacao: { 
+    type: DataTypes.ENUM('token', 'otp', 'assinatura digital', 'manual', 'automatico'),
+    allowNull: false
   }
-}, {
-  // OPÇÕES
-  tableName: 'encomenda',
-  timestamps: true, // migration tem created_at e updated_at
-  underscored: true // migration usa snake_case
-});
+}, { tableName: 'encomenda', timestamps: true, underscored: true });
 
-// LIGAÇÕES (Associações)
 Encomenda.associate = (models) => {
   // Pertence a
   Encomenda.belongsTo(models.Pedido, {
@@ -44,14 +32,13 @@ Encomenda.associate = (models) => {
     foreignKey: 'encomenda_id',
     as: 'itens'
   });
-  Encomenda.hasOne(models.Escrow, {
-    foreignKey: 'encomenda_id',
-    as: 'escrow'
-  });
   Encomenda.hasMany(models.Transacao, {
     foreignKey: 'encomenda_id',
     as: 'transacoes'
   });
+  Encomenda.hasOne(models.Escrow, {
+    foreignKey: 'encomenda_id',
+    as: 'escrow'
+  });
 };
-
 module.exports = Encomenda;

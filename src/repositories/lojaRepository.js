@@ -29,30 +29,30 @@ class LojaRepository extends baseRepository {
   async findByUsuarioId(usuario_id, options = {}) {
     return await this.model.findOne({ where: {usuario_id}, options});
   }
-
+  
   async findLojaCompleta(loja_id) {
       return await this.model.findOne({
           where: { id: loja_id },
           include: [
+            //   {
+            //       model: Produto,
+            //       as:'produtos',
+            //       // limit: 10,
+            //       attributes: ['id', 'nome', 'preco', 'estoque'],
+            //       limit: 10 // Opcional: buscar apenas os produtos mais recentes
+            //   },
               {
-                  model: Produto,
-                  as:'produtos',
-                  // limit: 10,
-                  attributes: ['id', 'nome', 'preco', 'estoque'],
-                  limit: 10 // Opcional: buscar apenas os produtos mais recentes
-              },
-              // {
-              //     model: Encomenda,
-              //     as:'encomendas',
-              //     limit:20,
-              //     include: [
-              //         {
-              //             model: EncomendaItem,
-              //             as: 'itens',
-              //             include: [{ model: Produto, as: 'produto'}]
-              //         }
-              //     ]
-              // }
+                  model: Encomenda,
+                  as:'encomendas',
+                  limit:20,
+                  include: [
+                      {
+                          model: EncomendaItem,
+                          as: 'itens',
+                          include: [{ model: Produto, as: 'produto'}]
+                      }
+                  ]
+              }
           ]
       });
   }

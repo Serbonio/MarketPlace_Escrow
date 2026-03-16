@@ -5,26 +5,26 @@ const Loja = sequelize.define('Loja', {
     usuario_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      references: {
-        model: 'usuario', // Nome da tabela pai
-        key: 'id'
-      }
+      references: { model: 'usuario', key: 'id' }
     },
-    nome: {type:DataTypes.STRING, allowNull: false},
+    nome: { type: DataTypes.STRING, allowNull: false },
     descricao: DataTypes.TEXT,
     status: DataTypes.ENUM('ativa', 'suspensa'),
-    reputacao: DataTypes.FLOAT
-  }, {
+    logo_url: DataTypes.STRING,
+    banner_url: DataTypes.STRING,
+    reputacao: DataTypes.FLOAT,
+    prazo_entrega: DataTypes.INTEGER
+}, {
     tableName: 'loja',
     timestamps: true,
     underscored: true
-  });
+});
 
-  Loja.associate = (models) => {
-    Loja.belongsTo(models.Usuario, { foreignKey: 'usuario_id' });
-    Loja.hasMany(models.Produto, { foreignKey: 'loja_id' });
-    Loja.hasMany(models.Encomenda, { foreignKey: 'loja_id' });
-  };
-
+Loja.associate = (models) => {
+    Loja.belongsTo(models.Usuario, { foreignKey: 'usuario_id', as:'usuario'});
+    Loja.hasMany(models.Produto, { foreignKey: 'loja_id', as: 'produtos' });
+    Loja.hasMany(models.Encomenda, { foreignKey: 'loja_id', as:'encomendas'});
+    Loja.hasMany(models.Levantamento, {foreignKey: 'loja_id', as:'levantamentos'})
+};
 
 module.exports = Loja;
