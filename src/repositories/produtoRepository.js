@@ -11,7 +11,7 @@ class ProdutoRepository extends BaseRepository {
     async findFullDetails(id, options = {}) {
         return await this.findById(id, {
             include: [
-                { model: ProdutoImagem, as: 'imagens' },
+                { model: ProdutoImagem, as: 'produto_imagens' },
                 { model: Categoria, as: 'categoria' }
             ],
             ...options
@@ -26,7 +26,7 @@ class ProdutoRepository extends BaseRepository {
             include: [
                 {
                     model: ProdutoImagem,
-                    as: 'imagens',
+                    as: 'produto_imagens',
                     attributes: ['id', 'url']
                 },
                 {

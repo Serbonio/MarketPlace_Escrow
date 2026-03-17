@@ -1,4 +1,3 @@
-const { where } = require('sequelize');
 const sequelize = require('../config/database');
 const {
     pedidoRepo,
@@ -10,13 +9,16 @@ const {
     ledgerRepo, 
     lojaRepo
 } = require('../repositories/index');
+const {initiatePayment}=require("./pagamentoService")
+
 
 async function registrarPedidoCompleto(usuario_id, items, dadosEntrega, t) {
     // 1. Buscar produtos para garantir preços atuais
     const produtoIds = items.map(i => i.produto_id);
     const produtosDoBanco = await produtoRepo.findByIds(produtoIds, { transaction: t });
+    // fn (1)
 
-    // 2. Calcular Totais e Agrupar por Loja
+    // 2. Calcular Totais e Agrupar por Loja fn(2)
     let totalGeral = 0;
     let totaisPorLoja = {};
 
@@ -36,7 +38,7 @@ async function registrarPedidoCompleto(usuario_id, items, dadosEntrega, t) {
         });
     }
 
-    // 3. Criar Pedido Principal (Snapshot com dados novos)
+    // 3. Criar Pedido Principal (Snapshot com dados novos) fn(3)
     const pedido = await pedidoRepo.create({
         usuario_id: usuario_id,
         total: totalGeral,
@@ -54,24 +56,23 @@ async function registrarPedidoCompleto(usuario_id, items, dadosEntrega, t) {
 
     const encomendasCriadas = [];
 
-    // 4. Criar Encomendas e Itens
+    // 4. Criar Encomendas e Itens fn(4)
     for (const lojaId in totaisPorLoja) {
         const encomenda = await encomendaRepo.create({
             pedido_id: pedido.id,
             loja_id: lojaId,
             total: totaisPorLoja[lojaId].total,
-            status: 'pendente'
+            status: 'pendente',
+            delivery_token:Math.floor((Math.random()*100000)+1), //fn(5)
+            metodo_confirmacao:"token",
         }, { transaction: t });
-
-        const itensParaSalvar = totaisPorLoja[lojaId].itens.map(i => ({
+        const itensParaSalvar = totaisPorLoja[lojaId].itens.map(i => ({ //fn(6)
             ...i,
             encomenda_id: encomenda.id
-        }));
-        
+        }));   
         await encomendaItemRepo.bulkCreate(itensParaSalvar, { transaction: t });
         encomendasCriadas.push(encomenda);
     }
-
     return { pedido, encomendasCriadas };
 }
 async function processarCheckout(usuario_id, items, dadosCheckout) {
@@ -94,13 +95,19 @@ async function processarCheckout(usuario_id, items, dadosCheckout) {
         const { pedido, encomendasCriadas } = resultadoRegistro;
 
         // PASSO 2: Simulação de Pagamento
-        const pagamentoSucesso = await simularPagamento(dadosCheckout, pedido.total);
-
+        const pagamentoSucesso = await initiatePayment({
+            method: dadosCheckout.metodo_pagamento,
+            amount: pedido.total,
+            orderId: pedido.id,
+            phone: dadosCheckout.telefone_contacto,
+            email: dadosCheckout.email
+});
+        console.log('Resultados do pagamento', pagamentoSucesso);
         if (pagamentoSucesso) {
             // PASSO 3: Confirmação Financeira (Nova transação interna)
             // IMPORTANTE: Passamos o ID e os objetos criados
             await confirmarPagamentoPedido(pedido.id, encomendasCriadas, usuario_id);
-            
+            // Implementar funcao para decrementar stock do produto no sistema
             return { sucesso: true, pedidoId: pedido.id, status: 'pago' };
         } else {
             return { sucesso: false, pedidoId: pedido.id, status: 'pendente_pagamento' };
@@ -122,16 +129,26 @@ async function confirmarPagamentoPedido(pedidoId, encomendas, usuario_id) {
         // Atualiza status do pedido
         await pedidoRepo.update(pedidoId, { status: 'pago' }, {transaction: t });
 
+        
+        
         for (const encomenda of encomendas) {
+            const itemEncomendas= await encomendaItemRepo.findByEncomenda(encomenda.id)
+            
+            const produtosEncomenda = itemEncomendas.map(item=>{item.produto_id})
+            // Reduz o estoque do produto
+            const itensDescontados = produtosEncomenda.map(item=>{
+                descontarStockProduto(produtosEncomenda, itemEncomendas.quantidade)
+                console.log()
+            })
+
             // Cria Transação Financeira
             const transacao = await transacaoRepo.create({
                 encomenda_id: encomenda.id,
-                tipo: 'pagamento',
+                tipo: 'pagamento_pedido',
                 valor: encomenda.total,
                 status: 'paga'
             }, { transaction: t });
 
-            // Registro no Ledger (Débito Usuário / Crédito Sistema)
             // Registro no Ledger (Débito Usuário)
             await ledgerRepo.create({
                 entidade_tipo: 'usuario',
@@ -259,6 +276,18 @@ async function liberarEscrow(encomenda_id, confirmado_por) {
 // Funcao complementar
 async function simularPagamento(dadosPagamento, total_pedido){
     return true;
+}
+
+async function descontarStockProduto(produto_id, quantidade){
+    const produto = await produtoRepo.findById(produto_id)
+    console.log(`Produto que será descontado por que foi pago${produto.nome}`)
+
+    return await produtoRepo.decrementEstoque(produto, quantidade)
+}
+async function validarQuantidadeProduto(produto, quantidade){
+    if(produto.estoque<quantidade){
+        throw new Error('Estoque insufiiciente')
+    }
 }
 
 module.exports = { 

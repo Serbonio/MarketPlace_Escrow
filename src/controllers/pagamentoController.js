@@ -16,7 +16,8 @@ class PagamentoController {
 
             return res.status(200).json(resultado);
         } catch (error) {
-            return res.status(400).json({ error: error.message });
+            console.log(error)
+            return res.status(400).json({ error: error.message }); 
         }
     }
 

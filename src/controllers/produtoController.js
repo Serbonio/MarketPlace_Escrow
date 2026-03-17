@@ -75,7 +75,6 @@ if (req.files && req.files.length > 0) {
     async produtosDaLoja(req,res){
         try{const loja_id= req.params.loja_id;
         const produtosLoja = await produtoService.produtosDaLoja(loja_id);
-    
         res.status(200).json(produtosLoja)
     }
         catch(error){

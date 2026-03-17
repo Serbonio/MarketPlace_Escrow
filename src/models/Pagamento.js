@@ -8,7 +8,7 @@ const Pagamento = sequelize.define('Pagamento', {
   valor_pago: { type: DataTypes.DECIMAL(10, 2), allowNull: false },
   pagamento_status: { type: DataTypes.STRING, defaultValue: 'pendente' ,
     validate:{
-        isIn:[['pendente','confirmado','falhou', 'expirado']]
+        isIn:[['pendente','pago','falhou', 'expirado']]
     }        
 },
   pagamento_metodo: { 

@@ -2,7 +2,7 @@ const {apiCall} = require('../client')
 
 // payments/ref.js
 
-const REF_PAYMENT_METHOD = `REF_${process.env.APPYPAY_REF_APP_KEY}`;
+const REF_PAYMENT_METHOD = `REF_${process.env.APPY_PAY_REF_APP_KEY}`;
 
 async function createREFCharge({ amount, orderId, customerPhone, customerEmail }) {
   const merchantTransactionId = `R${orderId}${Date.now().toString().slice(-6)}`;
@@ -19,10 +19,15 @@ async function createREFCharge({ amount, orderId, customerPhone, customerEmail }
       name: 'Cliente',
       telephone: customerPhone,   // SMS com referência
       email: customerEmail,       // Email com referência
-      smsNotification: true,
-      emailNotification: true
+      smsNotification: false,
+      emailNotification: false
     }
   };
+
+   // ✅ Log para ver o que está a ser enviado
+  console.log('=== REF Charge Request ===');
+  console.log('REF_PAYMENT_METHOD:', REF_PAYMENT_METHOD);
+  console.log('Body enviado:', JSON.stringify(body, null, 2));
 
   // OPÇÃO B: Você define a referência (deve ser única, 9-15 dígitos)
   // body.paymentInfo = {
@@ -31,8 +36,12 @@ async function createREFCharge({ amount, orderId, customerPhone, customerEmail }
   // };
 
   const { status, data } = await apiCall('POST', '/charges', body, false);
+   // ✅ Log para ver o que a AppyPay respondeu
+  console.log('=== REF Charge Response ===');
+  console.log('Status HTTP:', status);
+  console.log('Resposta completa:', JSON.stringify(data, null, 2));
 
-  if (status === 200 && data.responseStatus.successful) {
+  if ((status === 200 || status===202) && data.responseStatus.successful) {
     const ref = data.responseStatus.reference;
     return {
       success: true,
@@ -44,8 +53,9 @@ async function createREFCharge({ amount, orderId, customerPhone, customerEmail }
       status: 'pendente' // cliente ainda não pagou
     };
   }
-
-  throw new Error(data.responseStatus?.message || 'Erro ao criar referência');
+ const errorMsg = data.responseStatus?.message || data.error_description || JSON.stringify(data);
+  console.error('Erro AppyPay:', errorMsg);
+  throw new Error(errorMsg);
 }
 
 module.exports = { createREFCharge };

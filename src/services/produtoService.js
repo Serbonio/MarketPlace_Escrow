@@ -55,10 +55,10 @@ async criarProdutoCompleto(dados, imagensFormatadas) {
         const offset=(page-1)* limit;
         return await this.produtoRepo.findAll({
             where,
-            limit,
-            offset,
+            // limit,
+            // offset,
             include: [
-                { association: 'imagens' },
+                { association: 'produto_imagens' },
                 { association: 'categoria' }
             ]
         });

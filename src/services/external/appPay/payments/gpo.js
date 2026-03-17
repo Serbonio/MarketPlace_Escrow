@@ -2,7 +2,7 @@ const { apiCall } = require('../client');
 
 require('dotenv').config()
 
-const GPO_PAYMENT_METHOD = `GPO_${process.env.APP_PAY_GPO_APP_KEY}`
+const GPO_PAYMENT_METHOD = `GPO_${process.env.APPY_PAY_GPO_APP_KEY}`
 
 async function createGPOCharge({amount, phoneNumber, orderId, description}){
     // Gerar merchantTransactionId
@@ -11,10 +11,11 @@ async function createGPOCharge({amount, phoneNumber, orderId, description}){
     const body = {
         amount, 
         currency:'AOA', 
+        orderId,
         description: description,
         merchantTransactionId,
-        paymeny_method: GPO_PAYMENT_METHOD,
-        payment_info:{
+        paymentMethod: GPO_PAYMENT_METHOD,
+        paymentInfo:{
             phoneNumber: phoneNumber,
         },
         // options:{
@@ -23,17 +24,17 @@ async function createGPOCharge({amount, phoneNumber, orderId, description}){
     };
 
 const {status, data} = await apiCall('POST', '/charges', body, true);
-
+console.log(data)
 // Transacao aceite ou não
     if(status ==202){
     return {
-        sucess:true,
-        transactiionId: data.id,
+        success:true,
+        transactionId: data.id,
         merchantTransactionId,
         status: 'pending'
     }
 }
-    if(status==200 && data.responseStatus.sucessful){
+    if(status==200 && data.responseStatus.successful){
     return{
         sucess:true, 
         transactionId: data.id,
@@ -44,8 +45,8 @@ const {status, data} = await apiCall('POST', '/charges', body, true);
     throw new Error(data.responseStatus.message)
 }
 
-async function getChargeStatus(transactiionId){
-    const {data} = await apiCall('GET', `charges/${transactiionId}`)
+async function getChargeStatus(transactionId){
+    const {data} = await apiCall('GET', `charges/${transactionId}`)
     return data.payment
 }
 
