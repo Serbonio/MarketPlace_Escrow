@@ -14,6 +14,10 @@ const Encomenda = sequelize.define('Encomenda', {
     type: DataTypes.ENUM('token', 'otp', 'assinatura digital', 'manual', 'automatico'),
     allowNull: false, 
     defaultValue:'token'
+  }, 
+  entregue_em:{
+    type:DataTypes.DATE,
+    allowNull:true,
   }
 }, { tableName: 'encomenda', timestamps: true, underscored: true });
 

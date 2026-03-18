@@ -9,7 +9,7 @@ const routesEncomendas = require('./encomendaRoutes')
 const routesEncomendasItem = require('./encomendaItemRoutes')
 const routesEscrow = require('./escrowRoutes')
 const routesPagamentos = require('./pagamentosRoutes')
-
+const routesEntregas = require('./entregaRoutes')
 // // Rotas usuarios
 router.use('/usuarios', routesUsuarios);
 
@@ -33,5 +33,8 @@ router.use("/escrow", routesEscrow)
 
 // Pagamento
 router.use('/pagamentos', routesPagamentos)
+
+// QR Code
+router.use('/entregas', routesEntregas)
 
 module.exports = router;

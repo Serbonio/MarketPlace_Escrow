@@ -31,6 +31,7 @@ class UsuarioController {
           },
         });
       } catch (error) {
+        console.error({error:error.message})
         res.status(401).json({ error: error.message });
       }
     }

@@ -21,10 +21,7 @@ const Ledger = sequelize.define('Ledger', {
     type: DataTypes.DECIMAL(10, 2),
     allowNull: false
   },
-  saldo_resultante: {
-    type: DataTypes.DECIMAL(10, 2),
-    allowNull: false
-  }
+  
 }, {
   // OPÇÕES
   tableName: 'ledger',

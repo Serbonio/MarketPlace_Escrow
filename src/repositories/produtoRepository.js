@@ -50,13 +50,23 @@ class ProdutoRepository extends BaseRepository {
         return await super.findById(ids, options);
     }
 
-    async decrementEstoque(produto, quantidade, options = {}) {
-        // 'produto' aqui deve ser uma instância do Sequelize
-        return await produto.decrement('estoque', {
+    async decrementEstoque(produtoOuId, quantidade, options = {}) {
+    // Se for um número, decrementa usando o Model e WHERE
+    if (typeof produtoOuId === 'number' || typeof produtoOuId === 'string') {
+        return await this.model.decrement('estoque', {
             by: quantidade,
+            where: { id: produtoOuId },
             ...options
         });
     }
+
+    // Se for o objeto (instância do Sequelize), decrementa diretamente nele
+    // Isso é o que o seu Service está tentando fazer
+    return await produtoOuId.decrement('estoque', {
+        by: quantidade,
+        ...options
+    });
+}
 }
 
 module.exports = ProdutoRepository;
