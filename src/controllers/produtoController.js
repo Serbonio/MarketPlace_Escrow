@@ -45,7 +45,7 @@ if (req.files && req.files.length > 0) {
     });
 }
             const produto = await produtoService.criarProdutoCompleto(dadosProduto, imagens);
-            
+            console.log(produto)
             res.status(201).json(produto);
         } catch (error) {
             console.error("Erro ao criar produto:", error);

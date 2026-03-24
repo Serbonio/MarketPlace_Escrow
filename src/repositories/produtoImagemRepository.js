@@ -17,6 +17,9 @@ class ProdutoImagemRepository extends BaseRepository {
         // Define a nova principal
         return await this.update(imagemId, { principal: true }, options);
     }
+    async bulkCreate(images, options={}){
+        return await this.model.bulkCreate(images, options)
+    }
 }
 
 module.exports = ProdutoImagemRepository;

@@ -5,8 +5,8 @@ const Usuario = sequelize.define('Usuario', {
   nome: {
     type: DataTypes.STRING,
     allowNull: false,
+    email: {
   },
-  email: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true,
